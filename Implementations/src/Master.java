@@ -6,7 +6,7 @@ public class Master
 	public Master(Connection connect) throws SQLException
 	{
 		con = connect;
-		addToUserTable = con.prepareStatement("insert into users values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		addToUserTable = con.prepareStatement("insert into users values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		//TODO check for errors
 		addToUserTable.setArray(6, con.createArrayOf("bigint[]", new Long[0][0]));
 		addToUserTable.setArray(7, con.createArrayOf("integer", new Integer[0]));
@@ -16,6 +16,8 @@ public class Master
 		addToUserTable.setArray(13, con.createArrayOf("integer", new Integer[0]));
 		addToUserTable.setArray(14, con.createArrayOf("integer", new Integer[0]));
 		addToUserTable.setArray(15, con.createArrayOf("bigint", new Long[0]));
+		addToUserTable.setArray(16, con.createArrayOf("varchar", new String[0]));
+		addToUserTable.setArray(17, con.createArrayOf("varchar", new String[0]));
 		
 		addToClubTable = con.prepareStatement("insert into clubs values(?, ?)");
 		addToClubTable.setArray(2, con.createArrayOf("bigint", new Long[0]));
@@ -49,7 +51,7 @@ public class Master
 	* LAST_NAME - User's last name (Indexed)
 	* GRADUATION_YEAR - User's year of graduation (Indexed)
 	* CLUB_MEMBERSHIP - Club user belongs to (null if no club) (Indexed)
-	* LISTS - User created lists of users (First String in each list is its name)
+	* LISTS - User created lists of users
 	* GROUP_MEMBERSHIP - ID of each Group the User belongs to (GIN Indexed)
 	* PASSES_AVAILABLE - ID of each Pass the user owns (GIN Indexed)
 	* PLANNED_ATTENDANCE - ID of each Event the User has indicated they will attend (GIN Indexed)
@@ -60,7 +62,9 @@ public class Master
 	* CLAIMABLE_PASSES - ID of each Pass this User may claim
 	* JOINABLE_GROUPS - ID of each Group this User may join
 	* IGNORED_USERS -  PUID_NUM of each User this User has ignored
-	* PAST_ATTENDANCE_DATES - Dates of 
+	* PAST_ATTENDANCE_DATES - Dates of entrance to Events corresponding to PAST_ATTENDANCE
+	* NOTIFICATIONS - Notifications for the User
+	* LIST_NAMES - Names of each of the User's lists
 	 * @throws SQLException 
 	*/
 	public static void createUserTable() throws SQLException
@@ -83,6 +87,8 @@ public class Master
 			        "JOINABLE_GROUPS integer[] NOT NULL, " +
 			        "IGNORED_USERS bigint[] NOT NULL, " +
 			        "PAST_ATTENDANCE_DATES bigint[] NOT NULL, " +
+			        "NOTIFICATIONS varchar[] NOT NULL, " +
+			        "LIST_NAMES varchar[] NOT NULLL, " +
 			        "PRIMARY KEY (PUID_NUM))";
 
 		    Statement stmt = null;
@@ -227,4 +233,5 @@ public class Master
 	       	stmt.close(); 
 		}
 	}
+
 }

@@ -14,19 +14,20 @@ public class Club
 		
 	}
 	
-	public int displayCurrentAttendance()
+	public void createPasses(int[] eventIds, int numberPerMember, long[] userIds, 
+							boolean transferable, short type)
 	{
 		
 	}
 	
-	public int displayCurrentAttendance(Date startTime)
+	public void cancelEvent(int eventId)
 	{
 		
 	}
 	
-	public int displayAttendace(int eventId)
+	public void editEvent(int eventId, Date startDate, Date endDate, String name, String description,
+			short passType, short passTrensfer, long[] passesTransferableTo)
 	{
 		
 	}
-	
 }
