@@ -7,8 +7,7 @@ public class Master
 	{
 		con = connect;
 		addToUserTable = con.prepareStatement("insert into users values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-		//TODO check for errors
-		addToUserTable.setArray(6, con.createArrayOf("bigint[]", new Long[0][0]));
+		addToUserTable.setArray(6, con.createArrayOf("bigint", new Long[0]));
 		addToUserTable.setArray(7, con.createArrayOf("integer", new Integer[0]));
 		addToUserTable.setArray(8, con.createArrayOf("integer", new Integer[0]));
 		addToUserTable.setArray(9, con.createArrayOf("integer", new Integer[0]));
@@ -51,7 +50,7 @@ public class Master
 	* LAST_NAME - User's last name (Indexed)
 	* GRADUATION_YEAR - User's year of graduation (Indexed)
 	* CLUB_MEMBERSHIP - Club user belongs to (null if no club) (Indexed)
-	* LISTS - User created lists of users
+	* LISTS - User created lists of users (Separated by Long.MIN_VALUEs)
 	* GROUP_MEMBERSHIP - ID of each Group the User belongs to (GIN Indexed)
 	* PASSES_AVAILABLE - ID of each Pass the user owns (GIN Indexed)
 	* PLANNED_ATTENDANCE - ID of each Event the User has indicated they will attend (GIN Indexed)
@@ -65,6 +64,7 @@ public class Master
 	* PAST_ATTENDANCE_DATES - Dates of entrance to Events corresponding to PAST_ATTENDANCE
 	* NOTIFICATIONS - Notifications for the User
 	* LIST_NAMES - Names of each of the User's lists
+	* GIFTED_PASSES - ID of each Pass the User has gifted
 	 * @throws SQLException 
 	*/
 	public static void createUserTable() throws SQLException
@@ -76,7 +76,7 @@ public class Master
 			        "LAST_NAME varchar NOT NULL, " +
 			        "GRADUATION_YEAR smallint, " +
 			        "CLUB_MEMBERSHIP varchar, " +
-			        "LISTS bigint[][] NOT NULL, " +
+			        "LISTS bigint[] NOT NULL, " +
 			        "GROUP_MEMBERSHIP integer[] NOT NULL, " +
 			        "PASSES_AVAILABLE integer[] NOT NULL, " +
 			        "PLANNED_ATTENDANCE integer[] NOT NULL, " +
@@ -89,6 +89,7 @@ public class Master
 			        "PAST_ATTENDANCE_DATES bigint[] NOT NULL, " +
 			        "NOTIFICATIONS varchar[] NOT NULL, " +
 			        "LIST_NAMES varchar[] NOT NULLL, " +
+			        "GIFTED_PASSES integer[] NOT NULL, " + 
 			        "PRIMARY KEY (PUID_NUM))";
 
 		    Statement stmt = null;
@@ -113,6 +114,7 @@ public class Master
 	 * TRANSFERABLE - If the Pass is transferable (true for transferable)
 	 * STATUS - Status of the Pass (0 - Unused, 1 - Used (But still valid for current event), 2 - Ripped (No Longer Valid))
 	 * TYPE - Type of the Pass (0 - Unlimited Use (Bound to Event on use), 1 - One Use Only)
+	 * AVAILABLE_TO - PUID_NUM of each User who may claim this Pass
 	 */
 	public static void createPassTable() throws SQLException
 	{
@@ -125,6 +127,7 @@ public class Master
 				"TRANSFERABLE boolean NOT NULL, " +
 				"STATUS smallint NOT NULL, " +
 				"TYPE smallint NOT NULL, " +
+				"AVAILABLE_TO bigint[] NOT NULL, " + 
 				"PRIMARY KEY (ID))";
 		
 		Statement stmt = null;
@@ -171,6 +174,8 @@ public class Master
 	 * GROUP_NAME - Name of the Group (Indexed)
 	 * PASSES_AVAILABLE - ID of each Pass the Group has up for grabs
 	 * ASKING_PERMISSIONS - Group's policy on if members can ask for passes (true for they can)
+	 * MEMBERS - PUID_NUM of each User that is a member of the Group
+	 * PENDING_INVITES - PUID_NUM of each User to which an invitation to join the group has been sent
 	 */
 	public static void createGroupTable() throws SQLException
 	{
@@ -180,6 +185,8 @@ public class Master
 		        "GROUP_NAME varchar NOT NULL, " +
 		        "PASSES_AVAILABLE int[] NOT NULL, " + 
 		        "ASKING_PERMISSION boolean NOT NULL, " + 
+		        "MEMBERS bigint[] NOT NULL, " + 
+		        "PENDING_INVITES bigint[] NOT NULL, " +
 		        "PRIMARY KEY (ID))";
 		Statement stmt = null;
 		try 
