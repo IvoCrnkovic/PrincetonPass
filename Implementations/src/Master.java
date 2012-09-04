@@ -211,7 +211,7 @@ public class Master
 	 * PASS_TYPE - Event permissions (0 - Open to all Users, 1 - Pass is required, 2 - Members Only) (Indexed)
 	 * PASS_TRANSFER - Pass transfer permissions (0 - Passes are non-transferable, 
 	 * 				   1 - Passes are transferable, 2 - Passes are transferable only to Users in PASS_TRANSFERABLE_TO) (Indexed)
-	 * PASS_TRANSFERABLE_TO - Users which may receive passes to the Event (Used only if PASS_TRANSFER == 2)
+	 * [NOT YET IMPLEMENTED] PASS_TRANSFERABLE_TO - Users which may receive passes to the Event (Used only if PASS_TRANSFER == 2)
 	 */
 	public static void createEventTable() throws SQLException
 	{
@@ -225,7 +225,7 @@ public class Master
 		        "DESCRIPTION varchar NOT NULL, " + 
 		        "PASS_TYPE smallint NOT NULL, " +
 		        "PASS_TRANSFER smallint, " +
-		        "PASS_TRANSFERABLE_TO bigint[], " +
+	//	        "PASS_TRANSFERABLE_TO bigint[], " +
 		        "PRIMARY KEY (ID))";
 
 		Statement stmt = null;

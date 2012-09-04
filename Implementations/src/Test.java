@@ -9,7 +9,8 @@ public class Test {
 	{
 		con = getConnection();
 		s = con.createStatement();
-		s.execute("create table test (arr int[], id int)");
+		//s.execute("create table test (arr int[], id int)");
+		//s.execute("create extension intarray");
 		s.executeUpdate("insert into test values (ARRAY[]::INT[], 1)");
 		p = con.prepareStatement("update test set arr = ? where id = 1");
 		insert(1);
@@ -21,7 +22,7 @@ public class Test {
 		printAll();
 		delete(2);
 		delete(4);
-		//delete(7);
+		delete(7);
 		printAll();
 	}
 	private static void insert(int x) throws SQLException
@@ -32,7 +33,7 @@ public class Test {
 		r.moveToInsertRow();
 		r.updateInt(1, x);
 		r.insertRow();*/
-		s.execute("update test set arr = arr || " + x + " where id = 1");
+		s.execute("update test set arr = arr + " + x + " where id = 1");
 	}
 	private static void printAll() throws SQLException
 	{
@@ -42,11 +43,12 @@ public class Test {
 		System.out.println("FINAL: " + Arrays.toString(arr));
 	}
 	private static void delete(int x) throws SQLException
-	{
+	{/*
 		ResultSet r = s.executeQuery("select arr from test where id = 1");
 		r.next();
 		p.setArray(1, con.createArrayOf("int", removeIndexFromIntrray((Integer[]) r.getArray(1).getArray(), x)));
-		p.executeUpdate();
+		p.executeUpdate();*/
+		s.execute("update test set arr = arr - " + x + " where id = 1");
 	}
 	private static Connection getConnection() throws SQLException
 	{

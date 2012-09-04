@@ -16,6 +16,7 @@ public class UserAccess
 		con = connect;
 		s = con.createStatement();
 	}
+	
 	public static String getFirstName(long userId) throws SQLException, IllegalArgumentException
 	{
 		ResultSet r = s.executeQuery("select first_name from users where puid_num = " + userId);
@@ -44,13 +45,13 @@ public class UserAccess
 			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
 		return r.getString(1);
 	}
-	public static Long[][] getLists(long userId) throws SQLException, IllegalArgumentException
+	public static Long[] getLists(long userId) throws SQLException, IllegalArgumentException
 	{
 		ResultSet r = s.executeQuery("select lists from users where puid_num = " + userId);
 		if(!r.next())
 			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
 		//TODO Check for error
-		return (Long[][]) r.getArray(1).getArray();
+		return (Long[]) r.getArray(1).getArray();
 	}
 	public static Integer[] getGroups(long userId) throws SQLException, IllegalArgumentException
 	{
@@ -163,7 +164,7 @@ public class UserAccess
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 		
-		ArrayList<Long> lists = new ArrayList(Arrays.asList((Long[]) r.getArray(1).getArray()));
+		ArrayList<Long> lists = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(1).getArray()));
 		
 		int index = 0, size = lists.size();
 		outerloop: for (int i = 0; i < listNum; i++)
@@ -189,7 +190,7 @@ public class UserAccess
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 		
-		ArrayList<Long> lists = new ArrayList(Arrays.asList((Long[]) r.getArray(1).getArray()));
+		ArrayList<Long> lists = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(1).getArray()));
 		
 		lists.add(new Long(Long.MIN_VALUE));
 		for (int i = 0; i < listToAdd.length; i++)
@@ -212,7 +213,7 @@ public class UserAccess
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 		
-		ArrayList<Long> lists = new ArrayList(Arrays.asList((Long[]) r.getArray(1).getArray()));
+		ArrayList<Long> lists = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(1).getArray()));
 		
 		int index = 0, size = lists.size();
 		outerloop: for (int i = 0; i < listNum; i++)
@@ -256,7 +257,7 @@ public class UserAccess
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 		
-		ArrayList<Long> lists = new ArrayList(Arrays.asList((Long[]) r.getArray(1).getArray()));
+		ArrayList<Long> lists = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(1).getArray()));
 		
 		int index = 0, size = lists.size();
 		outerloop: for (int i = 0; i < listNum; i++)
@@ -300,8 +301,8 @@ public class UserAccess
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 
-		ArrayList<Long> listNames = new ArrayList(Arrays.asList((Long[]) r.getArray(1).getArray()));
-		ArrayList<Long> lists = new ArrayList(Arrays.asList((Long[]) r.getArray(1).getArray()));
+		ArrayList<Long> listNames = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(1).getArray()));
+		ArrayList<Long> lists = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(1).getArray()));
 		
 		int index = 0, size = lists.size(), namesIndex = -1;
 		outerloop: for (int i = 0; i < listNum; i++)
@@ -338,8 +339,8 @@ public class UserAccess
 			throw new IllegalArgumentException("Group ID: " + groupId + " Does Not Exist");
 		Long[] pendingInvites = (Long[]) r.getArray(1).getArray();
 		
-		PreparedStatement p = con.prepareStatement("begin; update users set group_membership = group_membership || " + groupId + " where puid_num = " + userId + "; " +
-				"update groups set members = members || " + userId + ", pending_invites = ? where id = " + groupId + ";commit"); 
+		PreparedStatement p = con.prepareStatement("begin; update users set group_membership = group_membership + " + groupId + " where puid_num = " + userId + "; " +
+				"update groups set members = members + " + userId + ", pending_invites = ? where id = " + groupId + ";commit"); 
 		p.setArray(1, con.createArrayOf("bigint", removeIndexFromLongArray(pendingInvites, userId)));
 		p.executeUpdate();
 		p.close();
@@ -347,53 +348,32 @@ public class UserAccess
 	
 	public static void removeGroup(long userId, int groupId) throws IllegalArgumentException, SQLException
 	{
-		ResultSet r = s.executeQuery("select group_membership from users where puid_num = " + userId);
-		if (!r.next())
+		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-		Integer[] groups = (Integer[]) r.getArray(1).getArray();
-		r = s.executeQuery("select members from groups where groupId = " + groupId);
-		if (!r.next())
-			throw new IllegalArgumentException("Group ID: " + groupId + " Does Not Exist");
-		Long[] members = (Long[]) r.getArray(2).getArray();
+		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
+			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 		
-		PreparedStatement p = null;
-		try
-		{
-			p = con.prepareStatement("begin); update users set group_membership = ? where puid_num = " + userId + "; " +
-					"update groups set members = ? where id = " + groupId);
-			p.setArray(1, con.createArrayOf("integer", removeIndexFromIntArray(groups, groupId)));
-			p.setArray(2, con.createArrayOf("bigint", removeIndexFromLongArray(members, userId)));
-			p.executeUpdate();
-		}
-		finally
-		{
-			if (p != null)
-				p.close();
-		}
+		s.executeUpdate("begin; update users set group_membership = group_membership - " + groupId + "where puid_num = " + userId + "; " +
+					"update groups set members = members - " + userId + " where id = " + groupId);
 	}
 	
 	public static void transferPass(long fromUserId, long toUserId, int passId) throws SQLException, IllegalArgumentException
 	{
 		if (!s.executeQuery("select puid_num from users where puid_num = " + toUserId).next())
 			throw new IllegalArgumentException("Receiving PUID_NUM: " + toUserId + " Does Not Exist");
-		
-		ResultSet r = s.executeQuery("select passes_available from users where puid_num = " + fromUserId);
-		if (!r.next())
+		if (!s.executeQuery("select puid_num from users where puid_num = " + fromUserId).next())
 			throw new IllegalArgumentException("Sending PUID_NUM: " + fromUserId + " Does Not Exist");
-		Integer[] passes = (Integer[]) r.getArray(1).getArray();
 		
-		r = s.executeQuery("select TRANSFERABLE from passes where id = " + passId);
+		ResultSet r = s.executeQuery("select TRANSFERABLE from passes where id = " + passId);
 		if (!r.next())
 			throw new IllegalArgumentException("Pass ID: " + passId + " Does Not Exist");
 		if (!r.getBoolean(1))
 			throw new IllegalArgumentException("Pass ID: " + passId + " Is Not Transferable");
 		
-		PreparedStatement p = con.prepareStatement("begin; update users set passes_available = passes_available || " + passId + " where puid_num = " + toUserId +
-				"; update users set passes_available = ? where puid_num = " + fromUserId + "; update passes set owner = " + toUserId + ", previous_owners = previous_owners || " + 
+		s.executeUpdate("begin; update users set passes_available = passes_available + " + passId + " where puid_num = " + toUserId +
+				"; update users set passes_available = passes_available - " + passId + " where puid_num = " + fromUserId + 
+				"; update passes set owner = " + toUserId + ", previous_owners = previous_owners + " + 
 				fromUserId + " where id = " + passId + "; commit");
-		p.setArray(1, con.createArrayOf("integer", removeIndexFromIntArray(passes, passId)));
-		p.executeUpdate();
-		p.close();
 	}
 	
 	public static void addPlannedAttendance(long userId, int eventId) throws IllegalArgumentException, SQLException
@@ -402,28 +382,15 @@ public class UserAccess
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 		if (!s.executeQuery("select id from events where id = " + eventId).next())
 			throw new IllegalArgumentException("Event ID: " + eventId + " Does Not Exist");
-		s.executeUpdate("update users set PLANNED_ATTENDANCE = PLANNED_ATTENDANCE || + " + eventId + " where puid_num = " + userId);
+		s.executeUpdate("update users set PLANNED_ATTENDANCE = PLANNED_ATTENDANCE + " + eventId + " where puid_num = " + userId);
 	}
 	
 	public static void removePlannedAttendance(long userId, int eventId) throws IllegalArgumentException, SQLException
 	{
-		ResultSet r = s.executeQuery("select planned_attendance from users where puid_num = " + userId);
-		if (!r.next())
+		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-		Integer[] events = (Integer[]) r.getArray(1).getArray();
 		
-		PreparedStatement p = null;
-		try
-		{
-			p = con.prepareStatement("update users set planned_attendance = ? where puid_num = " + userId);
-			p.setArray(1, con.createArrayOf("integer", removeIndexFromIntArray(events, eventId)));
-			p.executeUpdate();
-		}
-		finally
-		{
-			if (p != null)
-				p.close();
-		}
+		s.executeUpdate("update users set planned_attendance = planned_attendance - " + eventId + " where puid_num = " + userId);
 	}
 	
 	public static void addPastAttendance(long userId, int eventId, long time) throws IllegalArgumentException, SQLException
@@ -432,22 +399,23 @@ public class UserAccess
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 		if (!s.executeQuery("select id from events where id = " + eventId).next())
 			throw new IllegalArgumentException("Event ID: " + eventId + " Does Not Exist");
-		s.executeUpdate("update users set past_ATTENDANCE = past_ATTENDANCE || + " + eventId + ", past_attendance_dates = " +
-				"past_attendance_dates || " + time + " where puid_num = " + userId);
+		s.executeUpdate("update users set past_ATTENDANCE = past_ATTENDANCE + " + eventId + ", past_attendance_dates = " +
+				"past_attendance_dates + " + time + " where puid_num = " + userId);
 	}
 	
 	public static void removePastAttendance(long userId, int eventId) throws IllegalArgumentException, SQLException
 	{
-		ResultSet r = s.executeQuery("select past_attendance from users where puid_num = " + userId);
+		ResultSet r = s.executeQuery("select past_attendance # " + eventId + ", past_attendance_dates from users where puid_num = " + userId);
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-		Integer[] events = (Integer[]) r.getArray(1).getArray();
-		
+		int index = r.getInt(1);
+		ArrayList<Long> pastAttendanceDates = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(2).getArray()));
+		pastAttendanceDates.remove(index);
 		PreparedStatement p = null;
 		try
 		{
-			p = con.prepareStatement("update users set past_attendance = ? where puid_num = " + userId);
-			p.setArray(1, con.createArrayOf("integer", removeIndexFromIntArray(events, eventId)));
+			p = con.prepareStatement("update users set past_attendance = past_attendance - " + eventId + ", past_attendance_dates = ? where puid_num = " + userId);
+			p.setArray(1, con.createArrayOf("bigint", pastAttendanceDates.toArray()));
 			p.executeUpdate();
 		}
 		finally
@@ -463,7 +431,7 @@ public class UserAccess
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " To Add To Does Not Exist");
 		if (!s.executeQuery("select puid_num from users where puid_num = " + userToAdd).next())
 			throw new IllegalArgumentException("PUID_NUM: " + userToAdd + " To Be Added Does Not Exist");
-		s.executeUpdate("update users set visible_to = visible_to || + " + userToAdd + " where puid_num = " + userId);
+		s.executeUpdate("update users set visible_to = visible_to || " + userToAdd + " where puid_num = " + userId);
 	}
 	
 	public static void removeFromVisibleTo(long userId, long userToRemove) throws IllegalArgumentException, SQLException
@@ -487,33 +455,13 @@ public class UserAccess
 		}
 	}
 	
-	
-	/*
-	public static void addClaimablePass(long userId, int passId) throws IllegalArgumentException, SQLException
-	{
-		
-	}
-	public static void removeClaimablePass(long userId, int passId) throws IllegalArgumentException, SQLException
-	{
-		
-	}
-	public static void addJoinableGroup(long userId, int groupId) throws IllegalArgumentException, SQLException
-	{
-		
-	}
-	public static void removeJoinableGroup(long userId, int groupId) throws IllegalArgumentException, SQLException
-	{
-		
-	}*/
-	
-	
 	public static void addIgnoredUser(long userId, long userToIgnore) throws IllegalArgumentException, SQLException
 	{
 		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " To Add To Does Not Exist");
 		if (!s.executeQuery("select puid_num from users where puid_num = " + userToIgnore).next())
 			throw new IllegalArgumentException("PUID_NUM: " + userToIgnore + " To Be Added Does Not Exist");
-		s.executeUpdate("update users set ignored_users = ignored_users || + " + userToIgnore + " where puid_num = " + userId);
+		s.executeUpdate("update users set ignored_users = ignored_users || " + userToIgnore + " where puid_num = " + userId);
 	}
 	
 	public static void removeIgnoredUser(long userId, long userToRemove) throws IllegalArgumentException, SQLException
@@ -570,46 +518,259 @@ public class UserAccess
 	
 	public static void giftPassToGroup(long userId, int groupId, int passId) throws SQLException, IllegalArgumentException
 	{
-		
-		if (!s.executeQuery("select id from groups where id = " + groupId).next())
-			throw new IllegalArgumentException("Group Id: " + groupId + " Does Not Exist");
-		ResultSet r = s.executeQuery("select passes_available from users where puid_num = " + userId);
-		if (!r.next())
+		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-		Integer[] passes = (Integer[]) r.getArray(1).getArray();
-		r = s.executeQuery("select transferable from passes where id = " + passId);
+		ResultSet r = s.executeQuery("select transferable, available_to from passes where id = " + passId);
 		if (!r.next())
 			throw new IllegalArgumentException("Pass ID: " + passId + " Does Not Exist");
 		if (!r.getBoolean(1))
 			throw new IllegalArgumentException("Pass ID: " + passId + " Is Not Transferable");
 		
-		PreparedStatement p = null;
+		ArrayList<Long> availableTo = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(2).getArray()));
+		
+		r = s.executeQuery("select members from groups where id = " + groupId);
+		if (!r.next())
+			throw new IllegalArgumentException("Group Id: " + groupId + " Does Not Exist");
+		Long[] groupMembers = (Long[]) r.getArray(1).getArray();
+		
+		PreparedStatement pre = null;
+		PreparedStatement p = null; 
 		try
 		{
-			p = con.prepareStatement("update users set notifications = ? where puid_num = " + userId);
-			p.setArray(1, con.createArrayOf("varchar", notifications.toArray()));
-			p.executeUpdate();
+			long value;
+			p = con.prepareStatement("update users set claimable_passes = claimable_passes + " + passId + " where puid_num = ?");
+			for (int i = 0; i < groupMembers.length; i++)
+			{
+				value = groupMembers[i].longValue();
+				if (value == userId || availableTo.contains(groupMembers[i]))
+					continue;
+				
+				availableTo.add(groupMembers[i]);
+				p.setLong(1, value);
+				p.addBatch();
+			}
+			
+			pre = con.prepareStatement("update users set gifted_passes = gifted_passes + " + passId + ", passes_available = passes_available - " + passId + " where puid_num = " + userId + 
+					"; update passes set available_to = ? where id = " + passId + "; update groups set passes_available = passes_available + " + passId + "where id = " + groupId);
+			pre.setArray(1, con.createArrayOf("integer", availableTo.toArray()));
+			con.setAutoCommit(false);
+			p.executeBatch();
+			pre.executeUpdate();
+			con.commit();
+			con.setAutoCommit(true);
 		}
 		finally
 		{
 			if (p != null)
 				p.close();
+			if (pre != null)
+				pre.close();
 		}
 	}
 	
 	public static void giftPassToList(long userId, int passId, int listNum) throws SQLException, IllegalArgumentException
 	{
+		if (listNum < 0)
+			throw new IllegalArgumentException("List Number " + listNum + " Out Of Range");
+		ResultSet r = s.executeQuery("select lists from users where puid_num = " + userId);
+		if (!r.next())
+			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
+		Long[] lists = (Long[]) r.getArray(1).getArray();
+		r = s.executeQuery("select transferable, available_to from passes where id = " + passId);
+		if (!r.next())
+			throw new IllegalArgumentException("Pass ID: " + passId + " Does Not Exist");
+		if (!r.getBoolean(1))
+			throw new IllegalArgumentException("Pass ID: " + passId + " Is Not Transferable");
 		
+		ArrayList<Long> availableTo = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(2).getArray()));
+		
+		
+		ArrayList<Long> listMembers = new ArrayList<Long>();
+		int currentList = -1;
+		for (int i = 0; i < lists.length; i++)
+		{
+			if (lists[i].longValue() == Long.MIN_VALUE)
+			{
+				currentList++;
+				if (currentList > listNum)
+					break;
+				continue;
+			}
+			if (currentList == listNum)
+				listMembers.add(lists[i]);
+		}
+		if (currentList < listNum)
+			throw new IllegalArgumentException("List Number " + listNum + " Out Of Range");
+		
+		PreparedStatement pre = null;
+		PreparedStatement p = null; 
+		try
+		{
+			long value;
+			p = con.prepareStatement("update users set claimable_passes = claimable_passes + " + passId + " where puid_num = ?");
+			for (int i = 0; i < listMembers.size(); i++)
+			{
+				value = listMembers.get(i).longValue();
+				if (value == userId || availableTo.contains(listMembers.get(i)))
+					continue;
+				
+				availableTo.add(listMembers.get(i));
+				p.setLong(1, value);
+				p.addBatch();
+			}
+			
+			pre = con.prepareStatement("update users set gifted_passes = gifted_passes + " + passId + ", passes_available = passes_available - " + passId +" where puid_num = " + userId + 
+					"; update passes set available_to = ? where id = " + passId);
+			pre.setArray(1, con.createArrayOf("integer", availableTo.toArray()));
+			con.setAutoCommit(false);
+			p.executeBatch();
+			pre.executeUpdate();
+			con.commit();
+			con.setAutoCommit(true);
+		}
+		finally
+		{
+			if (p != null)
+				p.close();
+			if (pre != null)
+				pre.close();
+		}
+	}
+	
+	public static void giftPassToList(long userId, int passId, long[] userIds) throws SQLException, IllegalArgumentException
+	{
+		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
+			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
+		ResultSet r = s.executeQuery("select transferable, available_to from passes where id = " + passId);
+		if (!r.next())
+			throw new IllegalArgumentException("Pass ID: " + passId + " Does Not Exist");
+		if (!r.getBoolean(1))
+			throw new IllegalArgumentException("Pass ID: " + passId + " Is Not Transferable");
+		
+		ArrayList<Long> availableTo = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(2).getArray()));
+		
+		
+		
+		
+		PreparedStatement pre = null;
+		PreparedStatement p = null; 
+		try
+		{
+			p = con.prepareStatement("update users set claimable_passes = claimable_passes + " + passId + " where puid_num = ?");
+			for (int i = 0; i < userIds.length; i++)
+			{
+				if (userIds[i] == userId || availableTo.contains(userIds[i]))
+					continue;
+				
+				availableTo.add(userIds[i]);
+				p.setLong(1, userIds[i]);
+				p.addBatch();
+			}
+			
+			pre = con.prepareStatement("update users set gifted_passes = gifted_passes + " + passId + ", passes_available = passes_available - " + passId +" where puid_num = " + userId + 
+					"; update passes set available_to = ? where id = " + passId);
+			pre.setArray(1, con.createArrayOf("integer", availableTo.toArray()));
+			con.setAutoCommit(false);
+			p.executeBatch();
+			pre.executeUpdate();
+			con.commit();
+			con.setAutoCommit(true);
+		}
+		finally
+		{
+			if (p != null)
+				p.close();
+			if (pre != null)
+				pre.close();
+		}
 	}
 	
 	public static void retractPass(long userId, int passId) throws SQLException, IllegalArgumentException
 	{
+		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
+			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
+		ResultSet r = s.executeQuery("select available_to, owner from passes where id = " + passId);
+		if (!r.next())
+			throw new IllegalArgumentException("Pass ID: " + passId + " Does Not Exist");
+		if (r.getInt(2) != userId)
+			throw new IllegalArgumentException("User " + userId + " No Longer Owns Pass");
 		
+		Long[] availableTo = (Long[]) r.getArray(1).getArray();
+		
+		PreparedStatement pre = null;
+		PreparedStatement p = null; 
+		try
+		{
+			p = con.prepareStatement("update users set claimable_passes = claimable_passes - " + passId + " where puid_num = ?");
+			for (int i = 0; i < availableTo.length; i++)
+			{
+				p.setLong(1, userId);
+				p.addBatch();
+			}
+			
+			pre = con.prepareStatement("update users set gifted_passes = gifted_passes - " + passId + ", passes_available = passes_available + " + passId + " where puid_num = " + userId + 
+					"; update passes set available_to = ? where id = " + passId);
+			pre.setArray(1, con.createArrayOf("bigint", new Long[0]));
+			con.setAutoCommit(false);
+			p.executeBatch();
+			pre.executeUpdate();
+			con.commit();
+			con.setAutoCommit(true);
+		}
+		finally
+		{
+			if (p != null)
+				p.close();
+			if (pre != null)
+				pre.close();
+		}
 	}
 	
 	public static void renameList(long userId, int listNum, String name) throws IllegalArgumentException, SQLException
 	{
+		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
+			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 		s.executeUpdate("update users set list_names[" + listNum + "] = '" + name + "' where puid_num = " + userId);
+	}
+	
+	public static void claimPass(long userId, int passId) throws SQLException, IllegalArgumentException
+	{
+		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
+			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
+		ResultSet r = s.executeQuery("select available_to, owner from passes where id = " + passId);
+		if (!r.next())
+			throw new IllegalArgumentException("Pass ID: " + passId + " Does Not Exist");
+		long owner = r.getInt(2);
+		
+		Long[] availableTo = (Long[]) r.getArray(1).getArray();
+		
+		PreparedStatement pre = null;
+		PreparedStatement p = null; 
+		try
+		{
+			p = con.prepareStatement("update users set claimable_passes = claimable_passes - " + passId + " where puid_num = ?");
+			for (int i = 0; i < availableTo.length; i++)
+			{
+				p.setLong(1, userId);
+				p.addBatch();
+			}
+			pre = con.prepareStatement("update users set gifted_passes = gifted_passes - " + passId + " where puid_num = " + owner + 
+					"; update passes set available_to = ?, owner = " + userId + ", PREVIOUS_OWNERS = previous_owners + " + owner + " where id = " + passId + 
+					"; update users set passes_available = passes_available + " + passId + " where puid_num = " + userId);
+			pre.setArray(1, con.createArrayOf("bigint", new Long[0]));
+			con.setAutoCommit(false);
+			p.executeBatch();
+			pre.executeUpdate();
+			con.commit();
+			con.setAutoCommit(true);
+		}
+		finally
+		{
+			if (p != null)
+				p.close();
+			if (pre != null)
+				pre.close();
+		}
 	}
 	
 	private static Long[] removeIndexFromLongArray(Long[] arr, Long value) throws IllegalArgumentException
@@ -631,28 +792,5 @@ public class UserAccess
 			newArr[i + offset] = arr[i];
 		}
 		return (Long[]) newArr;
-	}
-	
-	private static Integer[] removeIndexFromIntArray(Integer[] arr, Integer value) throws IllegalArgumentException
-	{
-		Integer[] newArr = new Integer[arr.length - 1];
-		int offset = 0;
-		int index = 0;
-		for (; index < arr.length; index++)
-			if (arr[index].intValue() == value.intValue())
-				break;
-		if (index == arr.length)
-			throw new IllegalArgumentException("Value " + value + " Not Found In Array");
-		for (int i = 0; i < arr.length; i++)
-		{
-			if (i == index)
-			{
-				offset = -1; 
-				continue;
-			}
-			newArr[i + offset] = arr[i];
-		}
-		System.out.println(Arrays.toString(newArr));
-		return newArr;
 	}
 }

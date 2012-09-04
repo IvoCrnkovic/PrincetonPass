@@ -42,27 +42,67 @@ public class User
 	
 	public void giftPassToList(int passId, int listNum)
 	{
-		
+		try {
+			UserAccess.giftPassToList(PUID, passId, listNum);
+		} catch (IllegalArgumentException e) {
+			System.err.println("Gift Failed: IllegalArgumentException");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			System.err.println("Gift Failed: SQLException");
+			e.printStackTrace();
+		}
 	}
 	
 	public void giftPassToList(int passId, long[] userIds)
 	{
-		
+		try {
+			UserAccess.giftPassToList(PUID, passId, userIds);
+		} catch (IllegalArgumentException e) {
+			System.err.println("Gift Failed: IllegalArgumentException");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			System.err.println("Gift Failed: SQLException");
+			e.printStackTrace();
+		}
 	}
 	
 	public void retractPass(int passId)
 	{
-		
+		try {
+			UserAccess.retractPass(PUID, passId);
+		} catch (IllegalArgumentException e) {
+			System.err.println("Retract Failed: IllegalArgumentException");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			System.err.println("Retract Failed: SQLException");
+			e.printStackTrace();
+		}
 	}
 	
 	public void joinGroup(int groupId)
 	{
-		
+		try {
+			UserAccess.addGroup(PUID, groupId);
+		} catch (IllegalArgumentException e) {
+			System.err.println("Join Failed: IllegalArgumentException");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			System.err.println("Join Failed: SQLException");
+			e.printStackTrace();
+		}
 	}
 	
 	public void leaveGroup(int groupId)
 	{
-		
+		try {
+			UserAccess.removeGroup(PUID, groupId);
+		} catch (IllegalArgumentException e) {
+			System.err.println("Leave Failed: IllegalArgumentException");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			System.err.println("Leave Failed: SQLException");
+			e.printStackTrace();
+		}
 	}
 	
 	public void viewEventsAttended(long userId)
@@ -92,17 +132,41 @@ public class User
 	
 	public void claimPass(int passId)
 	{
-		
+		try {
+			UserAccess.claimPass(PUID, passId);
+		} catch (IllegalArgumentException e) {
+			System.err.println("Claim Failed: IllegalArgumentException");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			System.err.println("Claim Failed: SQLException");
+			e.printStackTrace();
+		}
 	}
 	
 	public void addToIgnoreList(long userId)
 	{
-		
+		try {
+			UserAccess.addIgnoredUser(PUID, userId);
+		} catch (IllegalArgumentException e) {
+			System.err.println("Ignore Failed: IllegalArgumentException");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			System.err.println("Ignore Failed: SQLException");
+			e.printStackTrace();
+		}
 	}
 	
 	public void removeFromIgnoreList(long userId)
 	{
-		
+		try {
+			UserAccess.removeIgnoredUser(PUID, userId);
+		} catch (IllegalArgumentException e) {
+			System.err.println("Remove Failed: IllegalArgumentException");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			System.err.println("Remove Failed: SQLException");
+			e.printStackTrace();
+		}
 	}
 	
 	public int displayCurrentAttendance(String clubName)
@@ -139,9 +203,4 @@ public class User
 	{
 		
 	}
-	
-	
-	
-	
-	
 }
