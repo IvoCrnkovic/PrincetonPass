@@ -149,7 +149,20 @@ public class UserAccess
 			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
 		return (String[]) r.getArray(1).getArray();
 	}
-	
+	public static String getListName(long userId, int listNum) throws SQLException, IllegalArgumentException
+	{
+		ResultSet r = s.executeQuery("select list_names[" + (listNum + 1) + "] from users where puid_num = " + userId);
+		if (!r.next())
+			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
+		return r.getString(1);
+	}
+	public static Integer[] getGiftedPasses(long userId) throws SQLException, IllegalArgumentException
+	{
+		ResultSet r = s.executeQuery("select gifted_passes from users where puid_num = " + userId);
+		if (!r.next())
+			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
+		return (Integer[]) r.getArray(1).getArray();
+	}
 	
 	public static void setFirstName(long userId, String x) throws SQLException
 	{
@@ -163,13 +176,12 @@ public class UserAccess
 	{
 		s.executeUpdate("update users set graduation_year = " + x + " where puid_num = " + userId);
 	}
-	
 	public static void setPrivacySetting(long userId, short x) throws SQLException
 	{
 		s.executeUpdate("update users set privacy_setting = " + x + " where puid_num = " + userId);
 	}
 	
-	public static void addToList(long userId, int listNum, long idToAdd) throws SQLException, IllegalArgumentException
+	public static void addToList(long userId, int listNum, long idToAdd) throws SQLException, IllegalArgumentException, RuntimeException
 	{
 		if (listNum < 0)
 			throw new IllegalArgumentException("Invalid List Number");
@@ -182,15 +194,23 @@ public class UserAccess
 		
 		ArrayList<Long> lists = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(1).getArray()));
 		
-		int index = 0, size = lists.size();
-		outerloop: for (int i = 0; i < listNum; i++)
+		int currentList = -1, index = 0;
+		for (; index < lists.size(); index++)
 		{
-			for (; index < size; index++)
+			if (lists.get(index).longValue() == Long.MIN_VALUE)
 			{
-				if (lists.get(index).longValue() == Long.MIN_VALUE)
-					continue outerloop;
+				currentList++;
+				if (currentList == listNum)
+					break;
 			}
-			throw new IllegalArgumentException("List Number " + listNum + " Out Of Bounds");
+		}
+		index++;
+		int newIndex = index;
+		while (newIndex < lists.size() && lists.get(newIndex).longValue() != Long.MIN_VALUE)
+		{
+			if (lists.get(newIndex).longValue() == idToAdd)
+				throw new RuntimeException("User Already Exists In List");
+			newIndex++;
 		}
 		lists.add(index, new Long(idToAdd));
 		
@@ -232,12 +252,15 @@ public class UserAccess
 		ArrayList<Long> lists = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(1).getArray()));
 		
 		int index = 0, size = lists.size();
-		outerloop: for (int i = 0; i < listNum; i++)
+		outerloop: for (int i = -1; i < listNum; i++)
 		{
 			for (; index < size; index++)
 			{
 				if (lists.get(index).longValue() == Long.MIN_VALUE)
+				{
+					index++;
 					continue outerloop;
+				}
 			}
 			throw new IllegalArgumentException("List Number " + listNum + " Out Of Bounds");
 		}
@@ -320,28 +343,30 @@ public class UserAccess
 		ArrayList<String> listNames = new ArrayList<String>(Arrays.asList((String[]) r.getArray(2).getArray()));
 		ArrayList<Long> lists = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(1).getArray()));
 		
-		int index = 0, size = lists.size(), namesIndex = -1;
-		outerloop: for (int i = 0; i < listNum; i++)
+		int currentList = -1, index = 0;
+		for (; index < lists.size(); index++)
 		{
-			for (; index < size; index++)
+			if (lists.get(index).longValue() == Long.MIN_VALUE)
 			{
-				if (lists.get(index).longValue() == Long.MIN_VALUE)
-				{
-					namesIndex++;
-					continue outerloop;
-				}
+				currentList++;
+				if (currentList == listNum)
+					break;
 			}
-			throw new IllegalArgumentException("List Number " + listNum + " Out Of Bounds");
 		}
 		
+		lists.remove(index);
+		index++;
 		while (index < lists.size() && lists.get(index).longValue() != Long.MIN_VALUE)
+		{
 			lists.remove(index);
+			index++;
+		}
 		
-		listNames.remove(namesIndex);
+		listNames.remove(listNum);
 		
 		PreparedStatement p = con.prepareStatement("update users set lists = ?, list_names = ? where puid_num = " + userId);
 		p.setArray(1, con.createArrayOf("bigint", lists.toArray()));
-		p.setArray(2, con.createArrayOf("bigint", listNames.toArray()));
+		p.setArray(2, con.createArrayOf("varchar", listNames.toArray()));
 		p.executeUpdate();
 		p.close();
 	}
@@ -415,6 +440,7 @@ public class UserAccess
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 		int index = r.getInt(1);
+		index -= 1;
 		ArrayList<Long> pastAttendanceDates = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(2).getArray()));
 		pastAttendanceDates.remove(index);
 		PreparedStatement p = null;
@@ -437,7 +463,7 @@ public class UserAccess
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " To Add To Does Not Exist");
 		if (!s.executeQuery("select puid_num from users where puid_num = " + userToAdd).next())
 			throw new IllegalArgumentException("PUID_NUM: " + userToAdd + " To Be Added Does Not Exist");
-		s.executeUpdate("update users set visible_to = visible_to || " + userToAdd + " where puid_num = " + userId);
+		s.executeUpdate("update users set visible_to = visible_to || " + userToAdd + "::bigint where puid_num = " + userId);
 	}
 	
 	public static void removeFromVisibleTo(long userId, long userToRemove) throws IllegalArgumentException, SQLException
@@ -467,7 +493,7 @@ public class UserAccess
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " To Add To Does Not Exist");
 		if (!s.executeQuery("select puid_num from users where puid_num = " + userToIgnore).next())
 			throw new IllegalArgumentException("PUID_NUM: " + userToIgnore + " To Be Added Does Not Exist");
-		s.executeUpdate("update users set ignored_users = ignored_users || " + userToIgnore + " where puid_num = " + userId);
+		s.executeUpdate("update users set ignored_users = ignored_users || " + userToIgnore + "::bigint where puid_num = " + userId);
 	}
 	
 	public static void removeIgnoredUser(long userId, long userToRemove) throws IllegalArgumentException, SQLException
@@ -495,7 +521,7 @@ public class UserAccess
 	{
 		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " To Add To Does Not Exist");
-		s.executeUpdate("update users set notifications = notifications || + '" + message + "' where puid_num = " + userId);
+		s.executeUpdate("update users set notifications = notifications || '" + message + "'::varchar where puid_num = " + userId);
 	}
 	
 	public static void removeNotification(long userId, int index) throws IllegalArgumentException, SQLException
@@ -736,7 +762,7 @@ public class UserAccess
 	{
 		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-		s.executeUpdate("update users set list_names[" + listNum + "] = '" + name + "' where puid_num = " + userId);
+		s.executeUpdate("update users set list_names[" + (listNum + 1) + "] = '" + name + "' where puid_num = " + userId);
 	}
 	
 	public static void claimPass(long userId, int passId) throws SQLException, IllegalArgumentException
@@ -790,33 +816,33 @@ public class UserAccess
 		r = s.executeQuery("select club_membership from users where puid_num = " + userId);
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
-		if (r.getString(1).equals(clubName))
+		if (r.getString(1) != null && r.getString(1).equals(clubName))
 		{
-			s.executeUpdate("update events set users_attended = users_attended + " + userId + " where eventId = " + eventId);
+			s.executeUpdate("update events set users_attended = users_attended || " + userId + "::bigint where id = " + eventId);
 			return true;
 		}
 		if (passType == 0)
 		{
-			s.executeUpdate("update events set users_attended = users_attended + " + userId + " where eventId = " + eventId);
+			s.executeUpdate("update events set users_attended = users_attended || " + userId + "::bigint where id = " + eventId);
 			return true;
 		}
 		if (passType == 2)
 			throw new RuntimeException("Event " + eventId + " Is Members Only");
-		r = s.executeQuery("select id, type from passes where owner = " + userId + " and events @> " + eventId);
+		r = s.executeQuery("select id, type from passes where owner = " + userId + " and events @> array[" + eventId + "]");
 		if (!r.next())
 			throw new RuntimeException("User Does Not Have Pass For Event");
 		int passId = r.getInt(1);
 		short type = r.getShort(2);
 		if (type == 0)
 		{
-			s.executeUpdate("begin; update users set past_attendance = past_attendance + " + eventId + ", past_attendance_dates = past_attendance_dates + " +
-					time + " where puid_num = " + userId + "; update passes set events = intset(" + eventId + "), transferable = false, status = 1 where id = " +
-					passId + "; update events set users_attended = users_attended + " + userId + " where eventId = " + eventId);
+			s.executeUpdate("begin; update users set past_attendance = past_attendance + " + eventId + ", past_attendance_dates = past_attendance_dates || " +
+					time + "::bigint where puid_num = " + userId + "; update passes set events = intset(" + eventId + "), transferable = false, status = 1 where id = " +
+					passId + "; update events set users_attended = users_attended || " + userId + "::bigint where id = " + eventId);
 			return true;
 		}
-		s.executeUpdate("begin; update users set past_attendance = past_attendance + " + eventId + ", past_attendance_dates = past_attendance_dates + " +
-				time + ", passes_available = passes_available - " + passId + " where puid_num = " + userId + "; delete from passes where id = " + passId + 
-				"; update events set users_attended = users_attended + " + userId + " where eventId = " + eventId);
+		s.executeUpdate("begin; update users set past_attendance = past_attendance + " + eventId + ", past_attendance_dates = past_attendance_dates || " +
+				time + "::bigint, passes_available = passes_available - " + passId + " where puid_num = " + userId + "; delete from passes where id = " + passId + 
+				"; update events set users_attended = users_attended || " + userId + "::bigint where id = " + eventId);
 		return true;
 	}
 	

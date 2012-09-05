@@ -133,7 +133,12 @@ public class Club
 	
 	public void addMembers(long userIds[]) throws SQLException
 	{
+		long current;
 		for (int i = 0; i < userIds.length; i++)
-			s.executeUpdate("update users set club_membership = '" + name + "' where puid_num = " + userIds[i]);
+		{
+			current = userIds[i];
+			s.executeUpdate("begin; update users set club_membership = '" + name + "' where puid_num = " + userIds[i] + 
+					"; update clubs set members = members || " + current + "::bigint where name = '" + name + "'; commit");
+		}
 	}
 }

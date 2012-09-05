@@ -59,27 +59,25 @@ public class Test {
 		System.out.println("Expected: [2, 3]\tResult: " +Arrays.toString(UserAccess.getList(1L, 0)));
 		UserAccess.removeFromList(1L, 0, 0);
 		System.out.println("Expected: [3]\tResult: " + Arrays.toString(UserAccess.getList(1L, 0)));
-		UserAccess.addToList(1L, 1, 2L);
-		System.out.println("Expected: [4, 3, 2]\tResult: " + Arrays.toString(UserAccess.getList(1L, 1)));
 		UserAccess.removeList(1L, 1);
 		System.out.println("Expected: [2]\tResult: " + Arrays.toString(UserAccess.getList(1L, 1)));
 		UserAccess.addToList(1L, 1, 4L);
 		UserAccess.addToList(1L, 1, 3L);
+		System.out.println("Expected: [3, 4, 2]\tResult: " + Arrays.toString(UserAccess.getList(1L, 1)));
 		UserAccess.removeFromList(1L, 1, 4L);
-		System.out.println("Expected: [2, 3]\tResult: " + Arrays.toString(UserAccess.getList(1L, 1)));
+		System.out.println("Expected: [3, 2]\tResult: " + Arrays.toString(UserAccess.getList(1L, 1)));
 		UserAccess.renameList(1L, 0, "Bro");
 		System.out.println("Done");
 		
 		//TODO Test Group Functions
-		
-		System.out.print("Testing Pass Transfer/Gift/Use... ");
+		System.out.print("Testing Pass Functions... ");
 		UserAccess.transferPass(4L, 1L, UserAccess.getPassesAvailable(4L)[0]);
 		UserAccess.giftPassToList(1L, UserAccess.getPassesAvailable(1L)[0], 0);
-		UserAccess.claimPass(3L, UserAccess.getPassesAvailable(1L)[0]);
-		UserAccess.giftPassToList(1L, UserAccess.getPassesAvailable(3L)[0], new long[] {2L});
-		UserAccess.claimPass(2L, UserAccess.getPassesAvailable(3L)[0]);
+		UserAccess.claimPass(3L, UserAccess.getGiftedPasses(1L)[0]);
+		UserAccess.giftPassToList(3L, UserAccess.getPassesAvailable(3L)[0], new long[] {2L});
+		UserAccess.claimPass(2L, UserAccess.getGiftedPasses(3L)[0]);
 		UserAccess.giftPassToList(2L, UserAccess.getPassesAvailable(2L)[0], new long[] {1L, 3L, 4L});
-		UserAccess.retractPass(2L, UserAccess.getPassesAvailable(2L)[0]);
+		UserAccess.retractPass(2L, UserAccess.getGiftedPasses(2L)[0]);
 		UserAccess.usePass(2L, "colonial", System.currentTimeMillis());
 		UserAccess.usePass(4L, "colonial", System.currentTimeMillis());
 		System.out.println("Done");
