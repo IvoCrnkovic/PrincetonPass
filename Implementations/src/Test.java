@@ -9,46 +9,92 @@ public class Test {
 	{
 		con = getConnection();
 		s = con.createStatement();
-		//s.execute("create table test (arr int[], id int)");
-		//s.execute("create extension intarray");
-		s.executeUpdate("insert into test values (ARRAY[]::INT[], 1)");
-		p = con.prepareStatement("update test set arr = ? where id = 1");
-		insert(1);
-		insert(2);
-		insert(3);
-		insert(4);
-		insert(5);
-		insert(6);
-		printAll();
-		delete(2);
-		delete(4);
-		delete(7);
-		printAll();
-	}
-	private static void insert(int x) throws SQLException
-	{/*
-		ResultSet r = s.executeQuery("select arr from test where id = 1 for update");
+		UserAccess.initialize(con);
+		Master.initialize(con);
+		
+		s.execute("Drop table users");
+		s.execute("Drop table groups");
+		s.execute("Drop table clubs");
+		s.execute("Drop table events");
+		s.execute("Drop table passes");
+		
+		System.out.print("Creating Tables... ");
+		Master.createClubTable();
+		Master.createEventTable();
+		Master.createGroupTable();
+		Master.createPassTable();
+		Master.createUserTable();
+		System.out.println("Done");
+		
+		Master.addClub("colonial");
+		Club c = new Club("colonial", con);
+		
+		System.out.print("Adding Users... ");
+		Master.addUser(1L, "Antonio", "Juliano", (short) 2015, (String) null, (short) 0, new Long[0], "ajuliano");
+		Master.addUser(2L, "Ivo", "Crnkovic-Rubsamen", (short) 2015, (String) null, (short) 0, new Long[0], "ivoCR");
+		Master.addUser(3L, "Brendan", "Chou", (short) 2015, (String) null, (short) 1, new Long[0], "bchou");
+		Master.addUser(4L, "Olivia", "Huang", (short) 2014, (String) null, (short) 2, new Long[]{3L}, "ohuang");
+		System.out.println("Done");
+		
+		System.out.print("Testing Club Functions... ");
+		c.addMembers(new long[]{4L});
+		c.createEvent(new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis() + 1L), "Party", "At Ivo's", (short) 1, (short) 1);
+		ResultSet r = s.executeQuery("select id from events");
 		r.next();
-		r = r.getArray(1).getResultSet();
-		r.moveToInsertRow();
-		r.updateInt(1, x);
-		r.insertRow();*/
-		s.execute("update test set arr = arr + " + x + " where id = 1");
-	}
-	private static void printAll() throws SQLException
-	{
-		ResultSet r = s.executeQuery("select arr from test where id = 1 for update");
+		int eventId = r.getInt(1);
+		c.createPasses(new Integer[] {r.getInt(1)}, 1, new long[] {3L}, true, (short) 0);
+		c.editEvent(r.getInt(1), new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis() + 10000000L), "New Party", "cooler than before", (short) 1, (short) 1);
+		c.createEvent(new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis() + 1L), "Party", "At Ivo's", (short) 1, (short) 1);
+		r = s.executeQuery("select id from events where name = 'Party'");
 		r.next();
-		Integer[] arr = (Integer[]) r.getArray(1).getArray();
-		System.out.println("FINAL: " + Arrays.toString(arr));
-	}
-	private static void delete(int x) throws SQLException
-	{/*
-		ResultSet r = s.executeQuery("select arr from test where id = 1");
-		r.next();
-		p.setArray(1, con.createArrayOf("int", removeIndexFromIntrray((Integer[]) r.getArray(1).getArray(), x)));
-		p.executeUpdate();*/
-		s.execute("update test set arr = arr - " + x + " where id = 1");
+		c.createPasses(new Integer[] {r.getInt(1)}, 1, new long[] {3L}, true, (short) 0);
+		c.cancelEvent(r.getInt(1));
+		System.out.println("Done");
+		
+		System.out.println("Testing List Functions:");
+		UserAccess.setPrivacySetting(3L, (short) 0);
+		UserAccess.addList(1L, new long[]{2L, 3L}, "Bros");
+		UserAccess.addList(1L, new long[]{4L, 3L, 2L}, "All");
+		UserAccess.addList(1L, new long[]{2L}, "Ivo");
+		System.out.println("Expected: [2, 3]\tResult: " +Arrays.toString(UserAccess.getList(1L, 0)));
+		UserAccess.removeFromList(1L, 0, 0);
+		System.out.println("Expected: [3]\tResult: " + Arrays.toString(UserAccess.getList(1L, 0)));
+		UserAccess.addToList(1L, 1, 2L);
+		System.out.println("Expected: [4, 3, 2]\tResult: " + Arrays.toString(UserAccess.getList(1L, 1)));
+		UserAccess.removeList(1L, 1);
+		System.out.println("Expected: [2]\tResult: " + Arrays.toString(UserAccess.getList(1L, 1)));
+		UserAccess.addToList(1L, 1, 4L);
+		UserAccess.addToList(1L, 1, 3L);
+		UserAccess.removeFromList(1L, 1, 4L);
+		System.out.println("Expected: [2, 3]\tResult: " + Arrays.toString(UserAccess.getList(1L, 1)));
+		UserAccess.renameList(1L, 0, "Bro");
+		System.out.println("Done");
+		
+		//TODO Test Group Functions
+		
+		System.out.print("Testing Pass Transfer/Gift/Use... ");
+		UserAccess.transferPass(4L, 1L, UserAccess.getPassesAvailable(4L)[0]);
+		UserAccess.giftPassToList(1L, UserAccess.getPassesAvailable(1L)[0], 0);
+		UserAccess.claimPass(3L, UserAccess.getPassesAvailable(1L)[0]);
+		UserAccess.giftPassToList(1L, UserAccess.getPassesAvailable(3L)[0], new long[] {2L});
+		UserAccess.claimPass(2L, UserAccess.getPassesAvailable(3L)[0]);
+		UserAccess.giftPassToList(2L, UserAccess.getPassesAvailable(2L)[0], new long[] {1L, 3L, 4L});
+		UserAccess.retractPass(2L, UserAccess.getPassesAvailable(2L)[0]);
+		UserAccess.usePass(2L, "colonial", System.currentTimeMillis());
+		UserAccess.usePass(4L, "colonial", System.currentTimeMillis());
+		System.out.println("Done");
+		
+		System.out.print("Testing Other Functions... ");
+		UserAccess.removePastAttendance(2L, eventId);
+		UserAccess.addPlannedAttendance(1L, eventId);
+		UserAccess.removePlannedAttendance(1L, eventId);
+		UserAccess.addToVisibleTo(4L, 1L);
+		UserAccess.removeFromVisibleTo(4L, 3L);
+		UserAccess.addIgnoredUser(1L, 2L);
+		UserAccess.removeIgnoredUser(1L, 2L);
+		UserAccess.addNotification(1L, "Yo");
+		UserAccess.removeNotification(1L, 0);
+		System.out.println("Done");
 	}
 	private static Connection getConnection() throws SQLException
 	{
@@ -59,27 +105,5 @@ public class Test {
 	    conn = DriverManager.getConnection("jdbc:postgresql://localhost/PassDB", connectionProps);
 	    System.out.println("Connected to database");
 	    return conn;
-	}
-	private static Integer[] removeIndexFromIntrray(Integer[] arr, Integer value) throws IllegalArgumentException
-	{
-		Integer[] newArr = new Integer[arr.length - 1];
-		int offset = 0;
-		int index = 0;
-		for (; index < arr.length; index++)
-			if (arr[index].intValue() == value.intValue())
-				break;
-		if (index == arr.length)
-			throw new IllegalArgumentException("Value " + value + " Not Found In Array");
-		for (int i = 0; i < arr.length; i++)
-		{
-			if (i == index)
-			{
-				offset = -1; 
-				continue;
-			}
-			newArr[i + offset] = arr[i];
-		}
-		System.out.println(Arrays.toString(newArr));
-		return newArr;
 	}
 }

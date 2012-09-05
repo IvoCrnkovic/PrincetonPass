@@ -1,12 +1,12 @@
 import java.sql.*;
 public class Master 
 {
-	static Connection con;
-	static PreparedStatement addToUserTable, addToClubTable;
-	public Master(Connection connect) throws SQLException
+	private static Connection con;
+	private static PreparedStatement addToUserTable, addToClubTable;
+	public static void initialize(Connection connect) throws SQLException
 	{
 		con = connect;
-		addToUserTable = con.prepareStatement("insert into users values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		addToUserTable = con.prepareStatement("insert into users values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		addToUserTable.setArray(6, con.createArrayOf("bigint", new Long[0]));
 		addToUserTable.setArray(7, con.createArrayOf("integer", new Integer[0]));
 		addToUserTable.setArray(8, con.createArrayOf("integer", new Integer[0]));
@@ -15,8 +15,10 @@ public class Master
 		addToUserTable.setArray(13, con.createArrayOf("integer", new Integer[0]));
 		addToUserTable.setArray(14, con.createArrayOf("integer", new Integer[0]));
 		addToUserTable.setArray(15, con.createArrayOf("bigint", new Long[0]));
-		addToUserTable.setArray(16, con.createArrayOf("varchar", new String[0]));
+		addToUserTable.setArray(16, con.createArrayOf("bigint", new Long[0]));
 		addToUserTable.setArray(17, con.createArrayOf("varchar", new String[0]));
+		addToUserTable.setArray(18, con.createArrayOf("varchar", new String[0]));
+		addToUserTable.setArray(19, con.createArrayOf("integer", new Integer[0]));
 		
 		addToClubTable = con.prepareStatement("insert into clubs values(?, ?)");
 		addToClubTable.setArray(2, con.createArrayOf("bigint", new Long[0]));
@@ -88,7 +90,7 @@ public class Master
 			        "IGNORED_USERS bigint[] NOT NULL, " +
 			        "PAST_ATTENDANCE_DATES bigint[] NOT NULL, " +
 			        "NOTIFICATIONS varchar[] NOT NULL, " +
-			        "LIST_NAMES varchar[] NOT NULLL, " +
+			        "LIST_NAMES varchar[] NOT NULL, " +
 			        "GIFTED_PASSES integer[] NOT NULL, " + 
 			        "PRIMARY KEY (PUID_NUM))";
 
@@ -112,7 +114,7 @@ public class Master
 	 * EVENTS - ID of each event this pass can be used at (GIN Indexed)
 	 * PREVIOUS_OWNERS - PUID_NUM of each User this Pass has previously belonged to
 	 * TRANSFERABLE - If the Pass is transferable (true for transferable)
-	 * STATUS - Status of the Pass (0 - Unused, 1 - Used (But still valid for current event), 2 - Ripped (No Longer Valid))
+	 * STATUS - Status of the Pass (0 - Unused, 1 - Used (But still valid for current event))
 	 * TYPE - Type of the Pass (0 - Unlimited Use (Bound to Event on use), 1 - One Use Only)
 	 * AVAILABLE_TO - PUID_NUM of each User who may claim this Pass
 	 */
@@ -120,7 +122,7 @@ public class Master
 	{
 		String createString = 
 				"CREATE TABLE PASSES" +
-				"(ID int NOT NULL SERIAL, " +
+				"(ID SERIAL, " +
 				"OWNER bigint, " +
 				"EVENTS integer[] NOT NULL, " +
 				"PREVIOUS_OWNERS integer[], " +
@@ -151,7 +153,7 @@ public class Master
 	public static void createClubTable() throws SQLException
 	{
 		String createString =
-			        "CREATE TABLE CLUBS " +
+			        "CREATE TABLE CLUBS (" +
 			        "NAME varchar NOT NULL, " +
 			        "MEMBERS bigint[] NOT NULL, " +
 			        "PRIMARY KEY (NAME))";
@@ -181,7 +183,7 @@ public class Master
 	{
 		String createString =
 				"CREATE TABLE GROUPS " +
-		        "(ID int NOT NULL SERIAL, " +
+		        "(ID SERIAL, " +
 		        "GROUP_NAME varchar NOT NULL, " +
 		        "PASSES_AVAILABLE int[] NOT NULL, " + 
 		        "ASKING_PERMISSION boolean NOT NULL, " + 
@@ -217,7 +219,7 @@ public class Master
 	{
 		String createString =
 		        "CREATE TABLE EVENTS " +
-		        "(ID int NOT NULL SERIAL, " +
+		        "(ID SERIAL, " +
 		        "CLUB varchar NOT NULL, " + 
 		        "START_DATE bigint NOT NULL, " +
 		        "END_DATE bigint NOT NULL, " +
@@ -225,6 +227,7 @@ public class Master
 		        "DESCRIPTION varchar NOT NULL, " + 
 		        "PASS_TYPE smallint NOT NULL, " +
 		        "PASS_TRANSFER smallint, " +
+		        "USERS_ATTENDED bigint[] NOT NULL, " +
 	//	        "PASS_TRANSFERABLE_TO bigint[], " +
 		        "PRIMARY KEY (ID))";
 

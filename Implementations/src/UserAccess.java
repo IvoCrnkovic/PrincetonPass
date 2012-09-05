@@ -5,13 +5,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 
 public class UserAccess 
 {
-	static Connection con;
-	static Statement s;
-	public UserAccess(Connection connect) throws SQLException
+	private static Connection con;
+	private static Statement s;
+	
+	public static void initialize(Connection connect) throws SQLException
 	{
 		con = connect;
 		s = con.createStatement();
@@ -45,13 +47,30 @@ public class UserAccess
 			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
 		return r.getString(1);
 	}
-	public static Long[] getLists(long userId) throws SQLException, IllegalArgumentException
+	public static Long[] getList(long userId, int listNum) throws SQLException, IllegalArgumentException
 	{
 		ResultSet r = s.executeQuery("select lists from users where puid_num = " + userId);
 		if(!r.next())
 			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
-		//TODO Check for error
-		return (Long[]) r.getArray(1).getArray();
+		
+		Long[] allLists = (Long[]) r.getArray(1).getArray();
+		int currentList = -1, firstIndex = -1, lastIndex = allLists.length;
+		for (int i = 0; i < allLists.length; i++)
+		{
+			if (allLists[i].longValue() == Long.MIN_VALUE)
+			{
+				currentList++;
+				if (currentList == listNum)
+					firstIndex = i + 1;
+				if (currentList == listNum + 1)
+					lastIndex = i;
+			}
+		}
+		if (firstIndex == -1)
+			throw new IllegalArgumentException("List Number " + listNum + " Out Of Bounds");
+		if (firstIndex >= allLists.length || firstIndex == lastIndex)
+			return new Long[0];
+		return Arrays.copyOfRange(allLists, firstIndex, lastIndex);
 	}
 	public static Integer[] getGroups(long userId) throws SQLException, IllegalArgumentException
 	{
@@ -144,10 +163,7 @@ public class UserAccess
 	{
 		s.executeUpdate("update users set graduation_year = " + x + " where puid_num = " + userId);
 	}
-	public static void setClub(long userId, String x) throws SQLException
-	{
-		s.executeUpdate("update users set club_membership = '" + x + "' where puid_num = " + userId);
-	}
+	
 	public static void setPrivacySetting(long userId, short x) throws SQLException
 	{
 		s.executeUpdate("update users set privacy_setting = " + x + " where puid_num = " + userId);
@@ -196,7 +212,7 @@ public class UserAccess
 		for (int i = 0; i < listToAdd.length; i++)
 			lists.add(new Long(listToAdd[i]));
 		
-		PreparedStatement p = con.prepareStatement("update users set lists = ?, list_names = list_names || + '" + name + "' where puid_num = " + userId);
+		PreparedStatement p = con.prepareStatement("update users set lists = ?, list_names = list_names || ARRAY['" + name + "']::varchar[] where puid_num = " + userId);
 		p.setArray(1, con.createArrayOf("bigint", lists.toArray()));
 		p.executeUpdate();
 		p.close();
@@ -301,7 +317,7 @@ public class UserAccess
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 
-		ArrayList<Long> listNames = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(1).getArray()));
+		ArrayList<String> listNames = new ArrayList<String>(Arrays.asList((String[]) r.getArray(2).getArray()));
 		ArrayList<Long> lists = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(1).getArray()));
 		
 		int index = 0, size = lists.size(), namesIndex = -1;
@@ -391,16 +407,6 @@ public class UserAccess
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 		
 		s.executeUpdate("update users set planned_attendance = planned_attendance - " + eventId + " where puid_num = " + userId);
-	}
-	
-	public static void addPastAttendance(long userId, int eventId, long time) throws IllegalArgumentException, SQLException
-	{
-		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
-			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-		if (!s.executeQuery("select id from events where id = " + eventId).next())
-			throw new IllegalArgumentException("Event ID: " + eventId + " Does Not Exist");
-		s.executeUpdate("update users set past_ATTENDANCE = past_ATTENDANCE + " + eventId + ", past_attendance_dates = " +
-				"past_attendance_dates + " + time + " where puid_num = " + userId);
 	}
 	
 	public static void removePastAttendance(long userId, int eventId) throws IllegalArgumentException, SQLException
@@ -771,6 +777,47 @@ public class UserAccess
 			if (pre != null)
 				pre.close();
 		}
+	}
+	
+	public static boolean usePass(long userId, String clubName, long time) throws SQLException, IllegalArgumentException, RuntimeException
+	{
+		
+		ResultSet r = s.executeQuery("select id, pass_type from events where club = '" + clubName + "' and start_date <= " + time + " and end_date >= " + time);
+		if (!r.next())
+			throw new IllegalArgumentException("Event at " + clubName + " at " + new Date(time) + " Does Not Exist");
+		int eventId = r.getInt(1);
+		short passType = r.getShort(2);
+		r = s.executeQuery("select club_membership from users where puid_num = " + userId);
+		if (!r.next())
+			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
+		if (r.getString(1).equals(clubName))
+		{
+			s.executeUpdate("update events set users_attended = users_attended + " + userId + " where eventId = " + eventId);
+			return true;
+		}
+		if (passType == 0)
+		{
+			s.executeUpdate("update events set users_attended = users_attended + " + userId + " where eventId = " + eventId);
+			return true;
+		}
+		if (passType == 2)
+			throw new RuntimeException("Event " + eventId + " Is Members Only");
+		r = s.executeQuery("select id, type from passes where owner = " + userId + " and events @> " + eventId);
+		if (!r.next())
+			throw new RuntimeException("User Does Not Have Pass For Event");
+		int passId = r.getInt(1);
+		short type = r.getShort(2);
+		if (type == 0)
+		{
+			s.executeUpdate("begin; update users set past_attendance = past_attendance + " + eventId + ", past_attendance_dates = past_attendance_dates + " +
+					time + " where puid_num = " + userId + "; update passes set events = intset(" + eventId + "), transferable = false, status = 1 where id = " +
+					passId + "; update events set users_attended = users_attended + " + userId + " where eventId = " + eventId);
+			return true;
+		}
+		s.executeUpdate("begin; update users set past_attendance = past_attendance + " + eventId + ", past_attendance_dates = past_attendance_dates + " +
+				time + ", passes_available = passes_available - " + passId + " where puid_num = " + userId + "; delete from passes where id = " + passId + 
+				"; update events set users_attended = users_attended + " + userId + " where eventId = " + eventId);
+		return true;
 	}
 	
 	private static Long[] removeIndexFromLongArray(Long[] arr, Long value) throws IllegalArgumentException

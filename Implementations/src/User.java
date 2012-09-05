@@ -105,16 +105,6 @@ public class User
 		}
 	}
 	
-	public void viewEventsAttended(long userId)
-	{
-		
-	}
-	
-	public void viewEventsAttended(long userId, long startDate)
-	{
-		
-	}
-	
 	public void askGroupForPass(int eventId, int groupId)
 	{
 		
@@ -167,21 +157,6 @@ public class User
 			System.err.println("Remove Failed: SQLException");
 			e.printStackTrace();
 		}
-	}
-	
-	public int displayCurrentAttendance(String clubName)
-	{
-		
-	}
-	
-	public int displayCurrentAttendance(String clubName, Date startTime)
-	{
-		
-	}
-	
-	public int displayAttendace(int eventId)
-	{
-		
 	}
 	
 	public void scheduleAttendance(int eventId)
