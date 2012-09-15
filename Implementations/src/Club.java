@@ -141,4 +141,12 @@ public class Club
 					"; update clubs set members = members || " + current + "::bigint where name = '" + name + "'; commit");
 		}
 	}
+	
+	public void banUser(long userId, Date bannedUntil) throws SQLException
+	{
+		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
+			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
+		s.executeUpdate("update clubs set banned_users = banned_users || " + userId + "::bigint, " +
+				"banned_until = banned_until || " + bannedUntil.getTime() + "::bigint where name = '" + name + "::varchar");
+	}
 }

@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+infoIndicationInOverviewRuler=false
+infoIndicationInVerticalRuler=false
+lineNumberRuler=true
+net.sf.eclipsecs.warning.text.style=NONE
+occurrenceHighlighting=false
+occurrenceIndication=true
+occurrenceIndicationColor=255,0,128
+occurrenceTextStyle=UNDERLINE
+overrideIndicatorInVerticalRuler=false
+overviewRuler_migration=migrated_3.1

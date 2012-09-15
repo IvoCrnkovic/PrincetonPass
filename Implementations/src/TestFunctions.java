@@ -1,7 +1,7 @@
 import java.sql.*;
 import java.util.Arrays;
 import java.util.Properties;
-public class Test {
+public class TestFunctions {
 	static Statement s; 
 	static PreparedStatement p;
 	static Connection con;

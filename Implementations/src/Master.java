@@ -19,9 +19,12 @@ public class Master
 		addToUserTable.setArray(17, con.createArrayOf("varchar", new String[0]));
 		addToUserTable.setArray(18, con.createArrayOf("varchar", new String[0]));
 		addToUserTable.setArray(19, con.createArrayOf("integer", new Integer[0]));
+		addToUserTable.setInt(20, 0);
 		
-		addToClubTable = con.prepareStatement("insert into clubs values(?, ?)");
+		addToClubTable = con.prepareStatement("insert into clubs values(?, ?, ?, ?)");
 		addToClubTable.setArray(2, con.createArrayOf("bigint", new Long[0]));
+		addToClubTable.setArray(3, con.createArrayOf("bigint", new Long[0]));
+		addToClubTable.setArray(4, con.createArrayOf("bigint", new Long[0]));
 	}
 	
 	public static void addUser(long puidNum, String firstName, String lastName, 
@@ -67,6 +70,7 @@ public class Master
 	* NOTIFICATIONS - Notifications for the User
 	* LIST_NAMES - Names of each of the User's lists
 	* GIFTED_PASSES - ID of each Pass the User has gifted
+	* NEW_NOTIFICATIONS - Number of notifications the User has not yet seen
 	 * @throws SQLException 
 	*/
 	public static void createUserTable() throws SQLException
@@ -92,6 +96,7 @@ public class Master
 			        "NOTIFICATIONS varchar[] NOT NULL, " +
 			        "LIST_NAMES varchar[] NOT NULL, " +
 			        "GIFTED_PASSES integer[] NOT NULL, " + 
+			        "NEW_NOTIFICATIONS integer NOT NULL, " +
 			        "PRIMARY KEY (PUID_NUM))";
 
 		    Statement stmt = null;
@@ -156,6 +161,8 @@ public class Master
 			        "CREATE TABLE CLUBS (" +
 			        "NAME varchar NOT NULL, " +
 			        "MEMBERS bigint[] NOT NULL, " +
+			        "BANNED_USERS bigint[] NOT NULL, " +
+			        "BANNED_UNTIL bigint[] NOT NULL, " +
 			        "PRIMARY KEY (NAME))";
 
 		Statement stmt = null;
@@ -243,5 +250,16 @@ public class Master
 	       	stmt.close(); 
 		}
 	}
-
+	
+	public User authorizeUser(String userName, String password)
+	{
+		Statement s = null;
+		try
+		{
+			ResultSet r = s.executeQuery("select puid_num from users where username = '" + userName + "'::varchar");
+			if (!r.next())
+				throw new IllegalArgumentException("Username " + userName + " Does Not Exist");
+			return new User()
+		}
+	}
 }
