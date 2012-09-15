@@ -1,192 +1,279 @@
 <?php
-
-function getFirstName()
+static $LIST_SEPARATOR = -432625;
+function getFirstName($userId)
 {
-	ResultSet r = s.executeQuery("select first_name from users where puid_num = " + userId);
-	if(!r.next())
-		throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
-	return r.getString(1);
+	$r = pg_query($dbconn, "select first_name from users where puid_num = " . $userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	$result = pg_fetch_result($r, 1, 1); 
+	if(!$result)
+		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+	pg_free_result($r);
+	return $name;
 }
-	function getLastName()
+function getLastName()
+{
+	$r = pg_query($dbconn, "select last_name from users where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	$result = pg_fetch_result($r, 1, 1); 
+	if(!$result)
+		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+	pg_free_result($r);
+	return $name;
+}
+function getGraduationYear()
+{
+	$r = pg_query($dbconn, "select graduation_year from users where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	$result = pg_fetch_result($r, 1, 1); 
+	if(!$result)
+		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+	pg_free_result($r);
+	return $year;
+}
+function getClub()
+{
+	$r = pg_query($dbconn, "select club_membership from users where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	$result = pg_fetch_result($r, 1, 1); 
+	if(!$result)
+		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+	pg_free_result($r);
+	return $club;
+}
+function getList($listNum)
+{
+	$r = pg_query($dbconn, "select lists from users where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	$result = pg_fetch_result($r, 1, 1); 
+	if(!$result)
+		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+	pg_free_result($r);
+	$currentList = -1;
+	$firstIndex = -1; 
+	$lastIndex = count($allLists);
+	for ($i = 0; $i < $count($allLists); $i++)
 	{
-		ResultSet r = s.executeQuery("select last_name from users where puid_num = " + userId);
-		if(!r.next())
-			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
-		return r.getString(1);
-	}
-	function getGraduationYear()
-	{
-		ResultSet r = s.executeQuery("select graduation_year from users where puid_num = " + userId);
-		if(!r.next())
-			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
-		return r.getShort(1);
-	}
-	function getClub()
-	{
-		ResultSet r = s.executeQuery("select club_membership from users where puid_num = " + userId);
-		if(!r.next())
-			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
-		return r.getString(1);
-	}
-	function getList(int listNum)
-	{
-		ResultSet r = s.executeQuery("select lists from users where puid_num = " + userId);
-		if(!r.next())
-			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
-
-		Long[] allLists = (Long[]) r.getArray(1).getArray();
-		int currentList = -1, firstIndex = -1, lastIndex = allLists.length;
-		for (int i = 0; i < allLists.length; i++)
-		{
-			if (allLists[i].longValue() == Long.MIN_VALUE)
-			{
-				currentList++;
-				if (currentList == listNum)
-					firstIndex = i + 1;
-				if (currentList == listNum + 1)
-					lastIndex = i;
-			}
+		if ($allLists[i] == $LIST_SEPARATOR)
+		{				
+			$currentList++;
+			if ($currentList == $listNum)
+				$firstIndex = $i + 1;
+			if ($currentList == $listNum + 1)
+				$lastIndex = $i;
 		}
-		if (firstIndex == -1)
-			throw new IllegalArgumentException("List Number " + listNum + " Out Of Bounds");
-		if (firstIndex >= allLists.length || firstIndex == lastIndex)
-			return new Long[0];
-		return Arrays.copyOfRange(allLists, firstIndex, lastIndex);
 	}
-	function getGroups()
-	{
-		ResultSet r = s.executeQuery("select group_membership from users where puid_num = " + userId);
-		if(!r.next())
-			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
-		return (Integer[]) r.getArray(1).getArray();
-	}
-	function getPassesAvailable()
-	{
-		ResultSet r = s.executeQuery("select passes_available from users where puid_num = " + userId);
-		if(!r.next())
-			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
-		return (Integer[]) r.getArray(1).getArray();
-	}
-	function getPlannedAttendance()
-	{
-		ResultSet r = s.executeQuery("select planned_attendance from users where puid_num = " + userId);
-		if(!r.next())
-			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
-		return (Integer[]) r.getArray(1).getArray();
-	}
-	function getPastAttendance()
-	{
-		ResultSet r = s.executeQuery("select past_attendance from users where puid_num = " + userId);
-		if(!r.next())
-			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
-		return (Integer[]) r.getArray(1).getArray();
-	}
-	function getPrivacySetting()
-	{
-		ResultSet r = s.executeQuery("select privacy_setting from users where puid_num = " + userId);
-		if(!r.next())
-			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
-		return r.getShort(1);
-	}
-	function getVisibleTo()
-	{
-		ResultSet r = s.executeQuery("select visible_to from users where puid_num = " + userId);
-		if(!r.next())
-			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
-		return (Long[]) r.getArray(1).getArray();
-	}
-	function getClaimablePasses()
-	{
-		ResultSet r = s.executeQuery("select claimable_passes from users where puid_num = " + userId);
-		if(!r.next())
-			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
-		return (Integer[]) r.getArray(1).getArray();
-	}
-	function getJoinableGroups()
-	{
-		ResultSet r = s.executeQuery("select joinable_groups from users where puid_num = " + userId);
-		if(!r.next())
-			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
-		return (Integer[]) r.getArray(1).getArray();
-	}
-	function getIgnoredUsers()
-	{
-		ResultSet r = s.executeQuery("select ignored_users from users where puid_num = " + userId);
-		if(!r.next())
-			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
-		return (Long[]) r.getArray(1).getArray();
-	}
-	function getPastAttendanceDates()
-	{
-		ResultSet r = s.executeQuery("select past_attendance_dates from users where puid_num = " + userId);
-		if(!r.next())
-			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
-		return (Long[]) r.getArray(1).getArray();
-	}
-	function getNotifications()
-	{
-		ResultSet r = s.executeQuery("select notifications from users where puid_num = " + userId);
-		if(!r.next())
-			throw new IllegalArgumentException("PUID_NUM " + userId + " Does Not Exist");
-		return (String[]) r.getArray(1).getArray();
-	}
-	function getListName(int listNum)
-	{
-		ResultSet r = s.executeQuery("select list_names[" + (listNum + 1) + "] from users where puid_num = " + userId);
-		if (!r.next())
-			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-		return r.getString(1);
-	}
-	function getGiftedPasses()
-	{
-		ResultSet r = s.executeQuery("select gifted_passes from users where puid_num = " + userId);
-		if (!r.next())
-			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-		return (Integer[]) r.getArray(1).getArray();
-	}
+	if ($firstIndex == -1)
+		throw new Exception("List Number " . listNum . " Out Of Bounds");
+	if ($firstIndex >= count($allLists) || $firstIndex == $lastIndex)
+		return array();
+	return array_slice($allLists, $firstIndex, $lastIndex - $firstIndex);
+}
+function getGroups()
+{
+	$r = pg_query($dbconn, "select group_membership from users where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	$result = pg_fetch_result($r, 1, 1); 
+	if(!$result)
+		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+	pg_free_result($r);
+	return $result;
+}
+function getPassesAvailable()
+{
+	$r = pg_query($dbconn, "select passes_available from users where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	$result = pg_fetch_result($r, 1, 1); 
+	if(!$result)
+		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+	pg_free_result($r);
+	return $result;
+}
+function getPlannedAttendance()
+{
+	$r = pg_query($dbconn, "select planned_attendance from users where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	$result = pg_fetch_result($r, 1, 1); 
+	if(!$result)
+		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+	pg_free_result($r);
+	return $result;
+}
+function getPastAttendance()
+{
+	$r = pg_query($dbconn, "select past_attendance from users where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	$result = pg_fetch_result($r, 1, 1); 
+	if(!$result)
+		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+	pg_free_result($r);
+	return $result;
+}
+function getPrivacySetting()
+{
+	$r = pg_query($dbconn, "select privacy_setting from users where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	$result = pg_fetch_result($r, 1, 1); 
+	if(!$result)
+		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+	pg_free_result($r);
+	return $result;
+}
+function getVisibleTo()
+{
+	$r = pg_query($dbconn, "select visible_to from users where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	$result = pg_fetch_result($r, 1, 1); 
+	if(!$result)
+		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+	pg_free_result($r);
+	return $result;
+}
+function getClaimablePasses()
+{
+	$r = pg_query($dbconn, "select claimable_passes from users where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	$result = pg_fetch_result($r, 1, 1); 
+	if(!$result)
+		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+	pg_free_result($r);
+	return $result;
+}
+function getJoinableGroups()
+{
+	$r = pg_query($dbconn, "select joinable_groups from users where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	$result = pg_fetch_result($r, 1, 1); 
+	if(!$result)
+		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+	pg_free_result($r);
+	return $result;
+}
+function getIgnoredUsers()
+{
+	$r = pg_query($dbconn, "select ignored_users from users where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	$result = pg_fetch_result($r, 1, 1); 
+	if(!$result)
+		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+	pg_free_result($r);
+	return $result;
+}
+function getPastAttendanceDates()
+{
+	$r = pg_query($dbconn, "select past_attendance_dates from users where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	$result = pg_fetch_result($r, 1, 1); 
+	if(!$result)
+		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+	pg_free_result($r);
+	return $result;
+}
+function getNotifications()
+{
+	$r = pg_query($dbconn, "select notifications from users where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	$result = pg_fetch_result($r, 1, 1); 
+	if(!$result)
+		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+	pg_free_result($r);
+	return $result;
+}
+function getListName($listNum)
+{
+	$r = pg_query($dbconn, "select list_names[" . ($listNum + 1) . "] from users where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	$result = pg_fetch_result($r, 1, 1); 
+	if(!$result)
+		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+	pg_free_result($r);
+	return $result;
+}
+function getGiftedPasses()
+{
+	$r = pg_query($dbconn, "select gifted_passes from users where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	$result = pg_fetch_result($r, 1, 1); 
+	if(!$result)
+		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+	pg_free_result($r);
+	return $result;
+}
 
-	function setFirstName(String x)
-	{
-		s.executeUpdate("update users set first_name = '" + x + "' where puid_num = " + userId);
-	}
-	function setLastName(String x)
-	{
-		s.executeUpdate("update users set last_name = '" + x + "' where puid_num = " + userId);
-	}
-	function setGraduationYear(short x)
-	{
-		s.executeUpdate("update users set graduation_year = " + x + " where puid_num = " + userId);
-	}
-	function setPrivacySetting(short x)
-	{
-		s.executeUpdate("update users set privacy_setting = " + x + " where puid_num = " + userId);
-	}
+function setFirstName($x)
+{
+	$r = pg_query($dbconn, "update users set first_name = '" . x . "' where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Update Failed");
+	pg_free_result($r);
+}
+function setLastName($x)
+{
+	$r = pg_query($dbconn, "update users set last_name = '" . x . "' where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Update Failed");
+	pg_free_result($r);
+}
+function setGraduationYear($x)
+{
+	$r = pg_query($dbconn, "update users set graduation_year = " . x . " where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Update Failed");
+	pg_free_result($r);
+}
+function setPrivacySetting($x)
+{
+	$r = pg_query($dbconn, "update users set privacy_setting = " . x . " where puid_num = " . userId);
+	if(!$r)
+		throw new Exception("Update Failed");
+	pg_free_result($r);
+}
 
-	function addToList(int listNum, long idToAdd)
-	{
-		if (listNum < 0)
-			throw new IllegalArgumentException("Invalid List Number");
-		if (!s.executeQuery("select puid_num from users where puid_num = " + idToAdd).next())
-			throw new IllegalArgumentException("PUID_NUM: " + idToAdd + " To Be Added Does Not Exist");
-
-		ResultSet r = s.executeQuery("select lists from users where puid_num = " + userId);
-		if (!r.next())
-			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-
+function addToList($listNum, $idToAdd)
+{
+	if ($listNum < 0)
+		throw new Exception("Invalid List Number");
+	$r = pg_query($dbconn, "select puid_num from users where puid_num = " . idToAdd);
+	if (!r)
+		throw new Exception("Query Error");
+	if (!pg_fetch_result($r, 1, 1))
+		throw new Exception("PUID_NUM: " . idToAdd . " To Be Added Does Not Exist");
+	pg_free_result($r);
+	$r = pg_query($dbconn, "select lists from users where puid_num = " . userId);
+	if (!$r)
+		throw new Exception("Query Error");
+	
+		throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 		ArrayList<Long> lists = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(1).getArray()));
-
 		int currentList = -1, index = 0;
-		for (; index < lists.size(); index++)
+	for (; index < lists.size(); index++)
+	{
+		if (lists.get(index).longValue() == Long.MIN_VALUE)
 		{
-			if (lists.get(index).longValue() == Long.MIN_VALUE)
-			{
-				currentList++;
-				if (currentList == listNum)
-					break;
-			}
+			currentList++;
+			if (currentList == listNum)
+				break;
 		}
-		index++;
-		int newIndex = index;
+		}
+	index++;
+	int newIndex = index;
 		while (newIndex < lists.size() && lists.get(newIndex).longValue() != Long.MIN_VALUE)
 		{
 			if (lists.get(newIndex).longValue() == idToAdd)
@@ -203,7 +290,7 @@ function getFirstName()
 
 	function addList(long[] listToAdd, String name)
 	{
-		ResultSet r = s.executeQuery("select lists from users where puid_num = " + userId);
+		$r = s.executeQuery("select lists from users where puid_num = " + userId);
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 
@@ -226,7 +313,7 @@ function getFirstName()
 		if (!s.executeQuery("select puid_num from users where puid_num = " + idToRemove).next())
 			throw new IllegalArgumentException("PUID_NUM: " + idToRemove + " To Be Removed Does Not Exist");
 
-		ResultSet r = s.executeQuery("select lists from users where puid_num = " + userId);
+		$r = s.executeQuery("select lists from users where puid_num = " + userId);
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 
@@ -273,7 +360,7 @@ function getFirstName()
 			throw new IllegalArgumentException("Invalid List Number");
 		if (listIndex < 0)
 			throw new IllegalArgumentException("Invalid List Index");
-		ResultSet r = s.executeQuery("select lists from users where puid_num = " + userId);
+		$r = s.executeQuery("select lists from users where puid_num = " + userId);
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 
@@ -317,7 +404,7 @@ function getFirstName()
 	{
 		if (listNum <= 0)
 			throw new IllegalArgumentException("Invalid List Number");
-		ResultSet r = s.executeQuery("select lists, list_names from users where puid_num = " + userId);
+		$r = s.executeQuery("select lists, list_names from users where puid_num = " + userId);
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 
@@ -356,7 +443,7 @@ function getFirstName()
 	{
 		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-		ResultSet r = s.executeQuery("select pending_members from groups where id = " + groupId);
+		$r = s.executeQuery("select pending_members from groups where id = " + groupId);
 		if (!r.next())
 			throw new IllegalArgumentException("Group ID: " + groupId + " Does Not Exist");
 		Long[] pendingInvites = (Long[]) r.getArray(1).getArray();
@@ -381,7 +468,7 @@ function getFirstName()
 
 	function transferPass(long toUserId, int passId)
 	{
-		ResultSet r = s.executeQuery("select ignored_users @> array[" + userId + "]::bigint[] from users where puid_num = " + toUserId);
+		$r = s.executeQuery("select ignored_users @> array[" + userId + "]::bigint[] from users where puid_num = " + toUserId);
 		if (!r.next())
 			throw new IllegalArgumentException("Receiving PUID_NUM: " + toUserId + " Does Not Exist");
 		if (r.getBoolean(1))
@@ -425,7 +512,7 @@ function getFirstName()
 
 	function removePastAttendance(int eventId)
 	{
-		ResultSet r = s.executeQuery("select past_attendance # " + eventId + ", past_attendance_dates from users where puid_num = " + userId);
+		$r = s.executeQuery("select past_attendance # " + eventId + ", past_attendance_dates from users where puid_num = " + userId);
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 		int index = r.getInt(1);
@@ -457,7 +544,7 @@ function getFirstName()
 
 	function removeFromVisibleTo(long userToRemove)
 	{
-		ResultSet r = s.executeQuery("select visible_to from users where puid_num = " + userId);
+		$r = s.executeQuery("select visible_to from users where puid_num = " + userId);
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 		Long[] users = (Long[]) r.getArray(1).getArray();
@@ -487,7 +574,7 @@ function getFirstName()
 
 	function removeIgnoredUser(long userToRemove)
 	{
-		ResultSet r = s.executeQuery("select ignored_users from users where puid_num = " + userId);
+		$r = s.executeQuery("select ignored_users from users where puid_num = " + userId);
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 		Long[] users = (Long[]) r.getArray(1).getArray();
@@ -515,7 +602,7 @@ function getFirstName()
 
 	function removeNotification(int index)
 	{
-		ResultSet r = s.executeQuery("select notifications from users where puid_num = " + userId);
+		$r = s.executeQuery("select notifications from users where puid_num = " + userId);
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 		ArrayList<String> notifications = new ArrayList<String>(Arrays.asList((String[]) r.getArray(1).getArray()));
@@ -539,7 +626,7 @@ function getFirstName()
 
 	function giftPassToGroup(int groupId, int passId)
 	{
-		ResultSet r = s.executeQuery("select first_name, last_name from users where puid_num = " + userId);
+		$r = s.executeQuery("select first_name, last_name from users where puid_num = " + userId);
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 		String firstName = r.getString(1), lastName = r.getString(2);
@@ -598,7 +685,7 @@ function giftPassToList(int passId, int listNum)
 {
 	if (listNum < 0)
 		throw new IllegalArgumentException("List Number " + listNum + " Out Of Range");
-	ResultSet r = s.executeQuery("select lists, first_name, last_name from users where puid_num = " + userId);
+	$r = s.executeQuery("select lists, first_name, last_name from users where puid_num = " + userId);
 	if (!r.next())
 		throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 	Long[] lists = (Long[]) r.getArray(1).getArray();
@@ -667,7 +754,7 @@ function giftPassToList(int passId, int listNum)
 
 		function giftPassToList(int passId, long[] userIds)
 		{
-		ResultSet r = s.executeQuery("select first_name, last_name from users where puid_num = " + userId);
+		$r = s.executeQuery("select first_name, last_name from users where puid_num = " + userId);
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 			String notification = r.getString(2) + " " + r.getString(3) + " has gifted you a pass! Check your Get tab to claim it";
@@ -715,7 +802,7 @@ function giftPassToList(int passId, int listNum)
 
 		function retractPass(int passId)
 		{
-		ResultSet r = s.executeQuery("select first_name, last_name from users where puid_num = " + userId);
+		$r = s.executeQuery("select first_name, last_name from users where puid_num = " + userId);
 		if (!r.next())
 			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
 		String notification = r.getString(1) + " " + r.getString(2) + " has retracted a previously gifted pass";
@@ -768,7 +855,7 @@ function giftPassToList(int passId, int listNum)
 		{
 		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
 		throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-		ResultSet r = s.executeQuery("select available_to, owner from passes where id = " + passId);
+		$r = s.executeQuery("select available_to, owner from passes where id = " + passId);
 		if (!r.next())
 			throw new IllegalArgumentException("Pass ID: " + passId + " Does Not Exist");
 			long owner = r.getInt(2);
@@ -810,7 +897,7 @@ function giftPassToList(int passId, int listNum)
 	*/
 	function usePass(String clubName, long time)
 	{
-	ResultSet r = s.executeQuery("select banned_users @> array[" + userId + "]::bigint[] from clubs where name = '" + clubName + "::varchar");
+	$r = s.executeQuery("select banned_users @> array[" + userId + "]::bigint[] from clubs where name = '" + clubName + "::varchar");
 		if (!r.next())
 			throw new IllegalArgumentException("Club: " + clubName + " Does Not Exist");
 		if (r.getBoolean(1))
@@ -902,7 +989,7 @@ return (Long[]) newArr;
 
 function askGroupForPass(int eventId, int groupId)
 	{
-		ResultSet r = s.executeQuery("select name, club from events where id = " + eventId);
+		$r = s.executeQuery("select name, club from events where id = " + eventId);
 		if (!r.next())
 		throw new IllegalArgumentException("Event ID " + eventId + " Does Not Exist");
 		String eventName = r.getString(1), clubName = r.getString(2);
@@ -947,7 +1034,7 @@ function askGroupForPass(int eventId, int groupId)
 
 function askListForPass(int eventId, int listNum)
 	{
-		ResultSet r = s.executeQuery("select name, club from events where id = " + eventId);
+		$r = s.executeQuery("select name, club from events where id = " + eventId);
 		if (!r.next())
 				throw new IllegalArgumentException("Event ID " + eventId + " Does Not Exist");
 				String eventName = r.getString(1), clubName = r.getString(2);
@@ -1006,7 +1093,7 @@ if (currentList < listNum)
 
 function askListForPass(int eventId, long[] userIds)
 	{
-		ResultSet r = s.executeQuery("select name, club from events where id = " + eventId);
+		$r = s.executeQuery("select name, club from events where id = " + eventId);
 		if (!r.next())
 			throw new IllegalArgumentException("Event ID " + eventId + " Does Not Exist");
 			String eventName = r.getString(1), clubName = r.getString(2);

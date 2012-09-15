@@ -251,15 +251,21 @@ public class Master
 		}
 	}
 	
-	public User authorizeUser(String userName, String password)
+	public User authorizeUser(String userName, String password) throws SQLException
 	{
 		Statement s = null;
 		try
 		{
+			s = con.createStatement();
 			ResultSet r = s.executeQuery("select puid_num from users where username = '" + userName + "'::varchar");
 			if (!r.next())
 				throw new IllegalArgumentException("Username " + userName + " Does Not Exist");
-			return new User()
+			return new User(r.getLong(1), con);
+		}
+		finally
+		{
+			if (s != null)
+				s.close();
 		}
 	}
 }
