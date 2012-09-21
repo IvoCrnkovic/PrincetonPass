@@ -7,51 +7,51 @@ function getFirstName($userId)
 		throw new Exception("Query Error");
 	$result = pg_fetch_result($r, 1, 1); 
 	if(!$result)
-		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 	pg_free_result($r);
 	return $name;
 }
-function getLastName()
+function getLastName($userId)
 {
-	$r = pg_query($dbconn, "select last_name from users where puid_num = " . userId);
+	$r = pg_query($dbconn, "select last_name from users where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Query Error");
 	$result = pg_fetch_result($r, 1, 1); 
 	if(!$result)
-		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 	pg_free_result($r);
 	return $name;
 }
-function getGraduationYear()
+function getGraduationYear($userId)
 {
-	$r = pg_query($dbconn, "select graduation_year from users where puid_num = " . userId);
+	$r = pg_query($dbconn, "select graduation_year from users where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Query Error");
 	$result = pg_fetch_result($r, 1, 1); 
 	if(!$result)
-		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 	pg_free_result($r);
 	return $year;
 }
-function getClub()
+function getClub($userId)
 {
-	$r = pg_query($dbconn, "select club_membership from users where puid_num = " . userId);
+	$r = pg_query($dbconn, "select club_membership from users where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Query Error");
 	$result = pg_fetch_result($r, 1, 1); 
 	if(!$result)
-		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 	pg_free_result($r);
 	return $club;
 }
-function getList($listNum)
+function getList($userId, $listNum)
 {
-	$r = pg_query($dbconn, "select lists from users where puid_num = " . userId);
+	$r = pg_query($dbconn, "select lists from users where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Query Error");
 	$result = pg_fetch_result($r, 1, 1); 
 	if(!$result)
-		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 	pg_free_result($r);
 	$currentList = -1;
 	$firstIndex = -1; 
@@ -68,179 +68,179 @@ function getList($listNum)
 		}
 	}
 	if ($firstIndex == -1)
-		throw new Exception("List Number " . listNum . " Out Of Bounds");
+		throw new Exception("List Number " . $listNum . " Out Of Bounds");
 	if ($firstIndex >= count($allLists) || $firstIndex == $lastIndex)
 		return array();
 	return array_slice($allLists, $firstIndex, $lastIndex - $firstIndex);
 }
-function getGroups()
+function getGroups($userId)
 {
-	$r = pg_query($dbconn, "select group_membership from users where puid_num = " . userId);
+	$r = pg_query($dbconn, "select group_membership from users where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Query Error");
 	$result = pg_fetch_result($r, 1, 1); 
 	if(!$result)
-		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 	pg_free_result($r);
 	return $result;
 }
-function getPassesAvailable()
+function getPassesAvailable($userId)
 {
-	$r = pg_query($dbconn, "select passes_available from users where puid_num = " . userId);
+	$r = pg_query($dbconn, "select passes_available from users where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Query Error");
 	$result = pg_fetch_result($r, 1, 1); 
 	if(!$result)
-		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 	pg_free_result($r);
 	return $result;
 }
-function getPlannedAttendance()
+function getPlannedAttendance($userId)
 {
-	$r = pg_query($dbconn, "select planned_attendance from users where puid_num = " . userId);
+	$r = pg_query($dbconn, "select planned_attendance from users where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Query Error");
 	$result = pg_fetch_result($r, 1, 1); 
 	if(!$result)
-		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 	pg_free_result($r);
 	return $result;
 }
-function getPastAttendance()
+function getPastAttendance($userId)
 {
-	$r = pg_query($dbconn, "select past_attendance from users where puid_num = " . userId);
+	$r = pg_query($dbconn, "select past_attendance from users where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Query Error");
 	$result = pg_fetch_result($r, 1, 1); 
 	if(!$result)
-		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 	pg_free_result($r);
 	return $result;
 }
-function getPrivacySetting()
+function getPrivacySetting($userId)
 {
-	$r = pg_query($dbconn, "select privacy_setting from users where puid_num = " . userId);
+	$r = pg_query($dbconn, "select privacy_setting from users where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Query Error");
 	$result = pg_fetch_result($r, 1, 1); 
 	if(!$result)
-		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 	pg_free_result($r);
 	return $result;
 }
-function getVisibleTo()
+function getVisibleTo($userId)
 {
-	$r = pg_query($dbconn, "select visible_to from users where puid_num = " . userId);
+	$r = pg_query($dbconn, "select visible_to from users where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Query Error");
 	$result = pg_fetch_result($r, 1, 1); 
 	if(!$result)
-		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 	pg_free_result($r);
 	return $result;
 }
-function getClaimablePasses()
+function getClaimablePasses($userId)
 {
-	$r = pg_query($dbconn, "select claimable_passes from users where puid_num = " . userId);
+	$r = pg_query($dbconn, "select claimable_passes from users where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Query Error");
 	$result = pg_fetch_result($r, 1, 1); 
 	if(!$result)
-		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 	pg_free_result($r);
 	return $result;
 }
-function getJoinableGroups()
+function getJoinableGroups($userId)
 {
-	$r = pg_query($dbconn, "select joinable_groups from users where puid_num = " . userId);
+	$r = pg_query($dbconn, "select joinable_groups from users where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Query Error");
 	$result = pg_fetch_result($r, 1, 1); 
 	if(!$result)
-		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 	pg_free_result($r);
 	return $result;
 }
-function getIgnoredUsers()
+function getIgnoredUsers($userId)
 {
-	$r = pg_query($dbconn, "select ignored_users from users where puid_num = " . userId);
+	$r = pg_query($dbconn, "select ignored_users from users where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Query Error");
 	$result = pg_fetch_result($r, 1, 1); 
 	if(!$result)
-		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 	pg_free_result($r);
 	return $result;
 }
-function getPastAttendanceDates()
+function getPastAttendanceDates($userId)
 {
-	$r = pg_query($dbconn, "select past_attendance_dates from users where puid_num = " . userId);
+	$r = pg_query($dbconn, "select past_attendance_dates from users where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Query Error");
 	$result = pg_fetch_result($r, 1, 1); 
 	if(!$result)
-		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 	pg_free_result($r);
 	return $result;
 }
-function getNotifications()
+function getNotifications($userId)
 {
-	$r = pg_query($dbconn, "select notifications from users where puid_num = " . userId);
+	$r = pg_query($dbconn, "select notifications from users where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Query Error");
 	$result = pg_fetch_result($r, 1, 1); 
 	if(!$result)
-		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 	pg_free_result($r);
 	return $result;
 }
-function getListName($listNum)
+function getListName($userId, $listNum)
 {
-	$r = pg_query($dbconn, "select list_names[" . ($listNum + 1) . "] from users where puid_num = " . userId);
+	$r = pg_query($dbconn, "select list_names[" . ($listNum + 1) . "] from users where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Query Error");
 	$result = pg_fetch_result($r, 1, 1); 
 	if(!$result)
-		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 	pg_free_result($r);
 	return $result;
 }
-function getGiftedPasses()
+function getGiftedPasses($userId)
 {
-	$r = pg_query($dbconn, "select gifted_passes from users where puid_num = " . userId);
+	$r = pg_query($dbconn, "select gifted_passes from users where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Query Error");
 	$result = pg_fetch_result($r, 1, 1); 
 	if(!$result)
-		throw new Exception("PUID_NUM " . userId . " Does Not Exist");
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 	pg_free_result($r);
 	return $result;
 }
 
-function setFirstName($x)
+function setFirstName($userId, $x)
 {
-	$r = pg_query($dbconn, "update users set first_name = '" . x . "' where puid_num = " . userId);
+	$r = pg_query($dbconn, "update users set first_name = '" . $x . "' where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Update Failed");
 	pg_free_result($r);
 }
 function setLastName($x)
 {
-	$r = pg_query($dbconn, "update users set last_name = '" . x . "' where puid_num = " . userId);
+	$r = pg_query($dbconn, "update users set last_name = '" . $x . "' where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Update Failed");
 	pg_free_result($r);
 }
 function setGraduationYear($x)
 {
-	$r = pg_query($dbconn, "update users set graduation_year = " . x . " where puid_num = " . userId);
+	$r = pg_query($dbconn, "update users set graduation_year = " . $x . " where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Update Failed");
 	pg_free_result($r);
 }
 function setPrivacySetting($x)
 {
-	$r = pg_query($dbconn, "update users set privacy_setting = " . x . " where puid_num = " . userId);
+	$r = pg_query($dbconn, "update users set privacy_setting = " . $x . " where puid_num = " . $userId);
 	if(!$r)
 		throw new Exception("Update Failed");
 	pg_free_result($r);
@@ -250,327 +250,325 @@ function addToList($listNum, $idToAdd)
 {
 	if ($listNum < 0)
 		throw new Exception("Invalid List Number");
-	$r = pg_query($dbconn, "select puid_num from users where puid_num = " . idToAdd);
+	$r = pg_query($dbconn, "select puid_num from users where puid_num = " . $idToAdd);
 	if (!r)
 		throw new Exception("Query Error");
 	if (!pg_fetch_result($r, 1, 1))
-		throw new Exception("PUID_NUM: " . idToAdd . " To Be Added Does Not Exist");
+		throw new Exception("PUID_NUM: " . $idToAdd . " To Be Added Does Not Exist");
 	pg_free_result($r);
-	$r = pg_query($dbconn, "select lists from users where puid_num = " . userId);
+	$r = pg_query($dbconn, "select lists from users where puid_num = " . $userId);
 	if (!$r)
 		throw new Exception("Query Error");
+	$lists = pg_fetch_result($r, 1, 1);
+	if (!$lists)
+		throw new IllegalArgumentException("PUID_NUM: " . $userId . " Does Not Exist");
+	$currentList = -1;
+	$index = 0;
+	for (; $index < count($lists); $index++)
+	{
+		if ($lists[$index] == $LIST_SEPERATOR)
+		{
+			$currentList++;
+			if ($currentList == $listNum)
+				break;
+		}
+	}
+	$index++;
+	$newIndex = $index;
+	while ($newIndex < count($lists) && $lists[$index] != $LIST_SEPERATOR_VALUE)
+	{
+		if ($lists[$newIndex] == $idToAdd)
+			throw new Exception("User Already Exists In List");
+		$newIndex++;
+	}
+	array_splice($lists, $index, 0, $indexToAdd);
 	
-		throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-		ArrayList<Long> lists = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(1).getArray()));
-		int currentList = -1, index = 0;
-	for (; index < lists.size(); index++)
+	pg_query_params($dbconn, "update users set lists = $1 where puid_num = " . $userId, array($lists));
+}
+
+function addList($listToAdd, $name)
+{
+	$r = pg_query($dbconn, "select lists from users where puid_num = " . $userId);
+	if (!$r)
+		throw new Exception("Query Failed");
+	$lists = pg_fetch_result($r, 1, 1);
+	if (!$lists)
+		throw new Exception("PUID_NUM: " + $userId + " Does Not Exist");
+	
+	array_push($lists, $LIST_SEPERATOR);
+	array_push($lists, $listToAdd);
+
+	pg_query_params($dbconn, "update users set lists = $1 where puid_num = " . $userId, array($lists));
+}
+
+function removeFromList($listNum, $idToRemove)
+{
+	if ($listNum < 0)
+		throw new Exception("Invalid List Number");
+	$r = pg_query($dbconn, "select puid_num from users where puid_num = " . $idToRemove);
+	if (!$r)
+		throw new Exception("Query Failed");
+	if (!pg_fetch_result($r, 1, 1))
+		throw new Exception("PUID_NUM: " . $idToRemove . " To Be Removed Does Not Exist");
+	$r = pg_query($dbconn, "select lists from users where puid_num = " . $userId);
+	if (!$r)
+		throw new Exception("Query Failed");
+
+	$lists = pg_fetch_result($r, 1, 1);
+	if (!$lists)
+		throw new Exception("PUID_NUM: " . $userId . " To Be Removed Does Not Exist");
+
+	$index = 0;
+	$size = count($lists);
+	//TODO Check this label
+	outerloop: for ($i = -1; i < $listNum; $i++)
 	{
-		if (lists.get(index).longValue() == Long.MIN_VALUE)
+		for (; $index < $size; $index++)
 		{
-			currentList++;
-			if (currentList == listNum)
+			if ($lists[$index] == LIST_SEPARATOR)
+			{
+				$index++;
+				continue outerloop;
+			}
+		}
+		throw new Exception("List Number " . $listNum . " Out Of Bounds");
+	}
+	$index++;
+	$value;
+	for (; $index < $size; $index++)
+	{
+		$value = $lists[$index];
+		if ($value == $LIST_SEPARATOR)
+			throw new Exception("PUID_NUM: " . $idToRemove . " Not Found In List");
+		if ($value == $idToRemove)
+		{
+			array_splice($lists, $index, 1);
+			break;
+		}
+	}
+	if ($index == $size)
+		throw new Exception("PUID_NUM: " . $idToRemove . " Not Found In List");
+
+	pg_query_params($dbconn, "update users set lists = $1 where puid_num = " . $userId, array($lists));
+}
+
+function removeFromList($listNum, $listIndex)
+	{
+	if ($listNum < 0)
+		throw new Exception("Invalid List Number");
+	if ($listIndex < 0)
+		throw new Exception("Invalid List Index");
+	$r = pg_query($dbconn, "select lists from users where puid_num = " . $userId);
+	if (!$r)
+		throw new Exception("Query Error");
+	$lists = pg_fetch_result($r, 1, 1);
+	if (!$lists)
+		throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
+
+	$index = 0;
+	$size = count($lists);
+	outerloop: for ($i =  0; $i < $listNum; $i++)
+	{
+		for (; $index < $size; $index++)
+		{
+			if ($lists[$index] == $LIST_SEPARATOR)
+				continue outerloop;
+		}
+		throw new Exception("List Number " . $listNum . " Out Of Bounds");
+	}
+
+	$index++;
+	$value;
+	$indexToRemove = $index + 1 + $listIndex;
+	for (; $index < $size; $index++)
+	{
+		$value = $lists[$index];
+		if ($value == $LIST_SEPARATOR)
+			throw new Exception("List Index " . $listIndex . " Out Of Bounds");
+		if ($value == $indexToRemove)
+		{
+			array_splice($lists, $indexToRemove, 1);
+			break;
+		}
+	}
+	if ($index == $size)
+		throw new Exception("List Index " . $listIndex . " Out Of Bounds");
+
+	pg_query_params($dbconn, "update users set lists = $1 where puid_num = " . $userId, array($lists));
+}
+
+function removeList($listNum)
+{
+	if ($listNum <= 0)
+		throw new Exception("Invalid List Number");
+	$r = pg_query($dbconn, "select lists, list_names from users where puid_num = " . $userId);
+	if (!$r)
+		throw new Exception("Query Error");
+	$listNames = pg_fetch_result($r, 1, 1);
+	$lists = pg_fetch_result($r, 1, 2);
+	if (!$listNames || !$lists)
+		throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
+	
+	$currentList = -1;
+	$index = 0;
+	for (; $index < count($lists); $index++)
+	{
+		if ($lists[$index] == $LIST_SEPARATOR)
+		{
+			$currentList++;
+			if ($currentList == $listNum)
 				break;
 		}
-		}
-	index++;
-	int newIndex = index;
-		while (newIndex < lists.size() && lists.get(newIndex).longValue() != Long.MIN_VALUE)
-		{
-			if (lists.get(newIndex).longValue() == idToAdd)
-				throw new RuntimeException("User Already Exists In List");
-			newIndex++;
-		}
-		lists.add(index, new Long(idToAdd));
-
-		PreparedStatement p = con.prepareStatement("update users set lists = ? where puid_num = " + userId);
-		p.setArray(1, con.createArrayOf("bigint", lists.toArray()));
-		p.executeUpdate();
-		p.close();
 	}
 
-	function addList(long[] listToAdd, String name)
+	array_splice($lists, $index, 1);
+	$index++;
+	while ($index < count($lists) && $lists[$index] != $LIST_SEPARATOR)
 	{
-		$r = s.executeQuery("select lists from users where puid_num = " + userId);
-		if (!r.next())
-			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-
-		ArrayList<Long> lists = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(1).getArray()));
-
-		lists.add(new Long(Long.MIN_VALUE));
-		for (int i = 0; i < listToAdd.length; i++)
-			lists.add(new Long(listToAdd[i]));
-
-		PreparedStatement p = con.prepareStatement("update users set lists = ?, list_names = list_names || ARRAY['" + name + "']::varchar[] where puid_num = " + userId);
-		p.setArray(1, con.createArrayOf("bigint", lists.toArray()));
-		p.executeUpdate();
-		p.close();
+		array_splice($lists, $index, 1);
+		$index++;
 	}
+	
+	array_splice($listNames, $index, 1);
 
-	function removeFromList(int listNum, long idToRemove)
-	{
-		if (listNum < 0)
-			throw new IllegalArgumentException("Invalid List Number");
-		if (!s.executeQuery("select puid_num from users where puid_num = " + idToRemove).next())
-			throw new IllegalArgumentException("PUID_NUM: " + idToRemove + " To Be Removed Does Not Exist");
+	pg_query_params($dbconn, "update users set lists = $1 where puid_num = " . $userId, array($lists));
+}
 
-		$r = s.executeQuery("select lists from users where puid_num = " + userId);
-		if (!r.next())
-			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
+function addGroup($groupId)
+{
+	$r = pg_query("select puid_num from users where puid_num = " . $userId);
+	if (!$r)
+		throw new Exception("Query Error");
+	if (!pg_fetch_result($r, 1, 1))
+		throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
+	$r = pg_query($dbconn, "select pending_members from groups where id = " . $groupId);
+	if (!$r)
+		throw new Exception("Query Error");
+	$pendingInvites = pg_fetch_result($r, 1, 1);
+	if (!$pendingInvites)
+		throw new Exception("Group ID: " . $groupId . " Does Not Exist");
+	
+	array_splice($pendingInvites, array_search($userId, $pendingInvites), 1);
+	pg_query_params("begin; update users set group_membership = group_membership + " . $groupId . " where puid_num = " . $userId . "; " .
+		"update groups set members = members + " . $userId . ", pending_invites = $1 where id = " . $groupId . ";commit", array($pendingInvites));
+	
+}
 
-		ArrayList<Long> lists = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(1).getArray()));
+function removeGroup($groupId)
+{
+	$r = pg_query($dbconn, "select puid_num from users where puid_num = " . $userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	$result = pg_fetch_result($r, 1, 1); 
+	if(!$result)
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 
-		int index = 0, size = lists.size();
-		outerloop: for (int i = -1; i < listNum; i++)
-		{
-			for (; index < size; index++)
-			{
-				if (lists.get(index).longValue() == Long.MIN_VALUE)
-				{
-					index++;
-					continue outerloop;
-				}
-			}
-			throw new IllegalArgumentException("List Number " + listNum + " Out Of Bounds");
-		}
-		index++;
-		long value;
-		for (; index < size; index++)
-		{
-			value = lists.get(index);
-			if (value == Long.MIN_VALUE)
-				throw new IllegalArgumentException("PUID_NUM: " + idToRemove + " Not Found In List");
-			if (value == idToRemove)
-			{
-				lists.remove(index);
-				break;
-			}
-		}
-		if (index == size)
-			throw new IllegalArgumentException("PUID_NUM: " + idToRemove + " Not Found In List");
+	pg_query($dbconn, "begin; update users set group_membership = group_membership - " . $groupId . "where puid_num = " . $userId . "; " .
+	"update groups set members = members - " . $userId . " where id = " . $groupId);
+}
 
-		PreparedStatement p = con.prepareStatement("update users set lists = ? where puid_num = " + userId);
-		p.setArray(1, con.createArrayOf("bigint", lists.toArray()));
-		p.executeUpdate();
-		p.close();
-	}
+function transferPass($toUserId, $passId)
+{
+	$r = pg_query($dbconn, "select ignored_users @> array[" . $userId . "]::bigint[] from users where puid_num = " . $toUserId);
+	if (!$r)
+		throw new Exception("Query Error");
+	if (!pg_fetch_result($r, 1, 1))
+		throw new Exception("User " . $userId . " Is Ignored By User " . $toUserId);
 
-	function removeFromList(int listNum, int listIndex)
-		{
-		if (listNum < 0)
-			throw new IllegalArgumentException("Invalid List Number");
-		if (listIndex < 0)
-			throw new IllegalArgumentException("Invalid List Index");
-		$r = s.executeQuery("select lists from users where puid_num = " + userId);
-		if (!r.next())
-			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
+	$r = pg_query($dbconn, "select TRANSFERABLE from passes where id = " . $passId);
+	if (!pg_fetch_result($r, 1, 1))
+		throw new Exception("Pass ID: " . $passId . " Is Not Transferable");
 
-		ArrayList<Long> lists = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(1).getArray()));
+	$r = pg_query($dbconn, "select first_name, last_name from users where puid_num = " . $userId);
+	if (!$r)
+		throw new Exception("Query Error");
+	if (!pg_fetch_result($r, 1, 1))
+		throw new Exception("Sending PUID_NUM: " . $userId . " Does Not Exist");
+	$notification = pg_fetch_result($r, 1, 1) . " " . pg_fetch_result($r, 1, 2) . " has gifted you a pass! Check it out in your passes tab";
 
-		int index = 0, size = lists.size();
-		outerloop: for (int i = 0; i < listNum; i++)
-		{
-			for (; index < size; index++)
-			{
-				if (lists.get(index).longValue() == Long.MIN_VALUE)
-					continue outerloop;
-			}
-			throw new IllegalArgumentException("List Number " + listNum + " Out Of Bounds");
-		}
+	pg_query("begin; update users set passes_available = passes_available + " . $passId . ", notifications = notification || '" .
+	$notification . "'::varchar, new_notifications = new_notifications + 1 where puid_num = " . $toUserId .
+	"; update users set passes_available = passes_available - " . $passId . " where puid_num = " . $userId .
+	"; update passes set owner = " . $toUserId . ", previous_owners = previous_owners + " .
+	$userId . " where id = " . $passId . "; commit");
+}
 
-		index++;
-		long value;
-		long indexToRemove = index + 1L + listIndex;
-		for (; index < size; index++)
-		{
-			value = lists.get(index);
-			if (value == Long.MIN_VALUE)
-				throw new IllegalArgumentException("List Index " + listIndex + " Out Of Bounds");
-			if (value == indexToRemove)
-			{
-				lists.remove(indexToRemove);
-				break;
-			}
-		}
-		if (index == size)
-			throw new IllegalArgumentException("List Index " + listIndex + " Out Of Bounds");
+function addPlannedAttendance($eventId)
+{
+	$r = pg_query($dbconn, "select puid_num from users where puid_num = " . $userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	if(!pg_fetch_result($r, 1, 1))
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
+	$r = pg_query($dbconn, "select id from events where puid_num = " . $eventId);
+	if(!$r)
+		throw new Exception("Query Error");
+	if(!pg_fetch_result($r, 1, 1))
+		throw new Exception("Event ID " . $eventId . " Does Not Exist");
+	pg_query($dbconn, "update users set PLANNED_ATTENDANCE = PLANNED_ATTENDANCE + " . $eventId . " where puid_num = " . $userId);
+}
 
-		PreparedStatement p = con.prepareStatement("update users set lists = ? where puid_num = " + userId);
-		p.setArray(1, con.createArrayOf("bigint", lists.toArray()));
-		p.executeUpdate();
-		p.close();
-	}
+function removePlannedAttendance($eventId)
+{
+	$r = pg_query($dbconn, "select puid_num from users where puid_num = " . $userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	if(!pg_fetch_result($r, 1, 1))
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 
-	function removeList(int listNum)
-	{
-		if (listNum <= 0)
-			throw new IllegalArgumentException("Invalid List Number");
-		$r = s.executeQuery("select lists, list_names from users where puid_num = " + userId);
-		if (!r.next())
-			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
+	pg_query($dbconn, "update users set planned_attendance = planned_attendance - " . $eventId . " where puid_num = " . $userId);
+}
 
-		ArrayList<String> listNames = new ArrayList<String>(Arrays.asList((String[]) r.getArray(2).getArray()));
-		ArrayList<Long> lists = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(1).getArray()));
+function removePastAttendance($eventId)
+{
+	$r = pg_query($dbconn, "select past_attendance # " . $eventId . ", past_attendance_dates from users where puid_num = " . $userId);
+	if (!$r)
+		throw new Exception("Query Error");
+	$index = pg_fetch_result($r, 1, 1);
+	if (!$index)
+		throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
+	$index -= 1;
+	$pastAttendanceDates = pg_fetch_result($r, 1, 1);
+	array_splice($pastAttendanceDates, $index, 1);
+	pg_query_params($dbconn, "update users set past_attendance = past_attendance - " . $eventId . ", past_attendance_dates = $1 where puid_num = " . $userId, array($pastAttendanceDates));
+}
 
-		int currentList = -1, index = 0;
-		for (; index < lists.size(); index++)
-		{
-			if (lists.get(index).longValue() == Long.MIN_VALUE)
-			{
-				currentList++;
-				if (currentList == listNum)
-					break;
-			}
-		}
+function addToVisibleTo($userToAdd)
+{
+	$r = pg_query($dbconn, "select puid_num from users where puid_num = " . $userId);
+	if(!$r)
+		throw new Exception("Query Error");
+	if(!pg_fetch_result($r, 1, 1))
+		throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
+	$r = pg_query($dbconn, "select puid_num from users where puid_num = " . $userToAdd);
+	if(!$r)
+		throw new Exception("Query Error");
+	if(!pg_fetch_result($r, 1, 1))
+		throw new Exception("PUID_NUM " . $userToAdd . " Does Not Exist");
+	pg_query("update users set visible_to = visible_to || " . $userToAdd . "::bigint where puid_num = " . $userId);
+}
 
-		lists.remove(index);
-		index++;
-		while (index < lists.size() && lists.get(index).longValue() != Long.MIN_VALUE)
-		{
-			lists.remove(index);
-			index++;
-		}
+function removeFromVisibleTo($userToRemove)
+{
+	$r = pg_query($dbconn, "select visible_to from users where puid_num = " . $userId);
+	if (!$r)
+		throw new Exception("Query Error");
+	$users = pg_fetch_result($r, 1, 1);
+	if (!$users)
+		throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
 
-		listNames.remove(listNum);
+	array_splice($users, array_search($userToRemove, $users), 1);
+	pg_query_params($dbconn, "update users set visible_to = $1 where puid_num = " . $userId, array($users));
+}
 
-		PreparedStatement p = con.prepareStatement("update users set lists = ?, list_names = ? where puid_num = " + userId);
-		p.setArray(1, con.createArrayOf("bigint", lists.toArray()));
-		p.setArray(2, con.createArrayOf("varchar", listNames.toArray()));
-		p.executeUpdate();
-		p.close();
-	}
-
-	function addGroup(int groupId)
-	{
-		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
-			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-		$r = s.executeQuery("select pending_members from groups where id = " + groupId);
-		if (!r.next())
-			throw new IllegalArgumentException("Group ID: " + groupId + " Does Not Exist");
-		Long[] pendingInvites = (Long[]) r.getArray(1).getArray();
-
-		PreparedStatement p = con.prepareStatement("begin; update users set group_membership = group_membership + " + groupId + " where puid_num = " + userId + "; " +
-		"update groups set members = members + " + userId + ", pending_invites = ? where id = " + groupId + ";commit");
-		p.setArray(1, con.createArrayOf("bigint", removeIndexFromLongArray(pendingInvites, userId)));
-		p.executeUpdate();
-		p.close();
-	}
-
-	function removeGroup(int groupId)
-	{
-		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
-			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
-			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-
-		s.executeUpdate("begin; update users set group_membership = group_membership - " + groupId + "where puid_num = " + userId + "; " +
-		"update groups set members = members - " + userId + " where id = " + groupId);
-	}
-
-	function transferPass(long toUserId, int passId)
-	{
-		$r = s.executeQuery("select ignored_users @> array[" + userId + "]::bigint[] from users where puid_num = " + toUserId);
-		if (!r.next())
-			throw new IllegalArgumentException("Receiving PUID_NUM: " + toUserId + " Does Not Exist");
-		if (r.getBoolean(1))
-			throw new RuntimeException("User " + userId + " Is Ignored By User " + toUserId);
-
-		r = s.executeQuery("select TRANSFERABLE from passes where id = " + passId);
-		if (!r.next())
-			throw new IllegalArgumentException("Pass ID: " + passId + " Does Not Exist");
-		if (!r.getBoolean(1))
-			throw new IllegalArgumentException("Pass ID: " + passId + " Is Not Transferable");
-
-		r = s.executeQuery("select first_name, last_name from users where puid_num = " + userId);
-		if (!r.next())
-			throw new IllegalArgumentException("Sending PUID_NUM: " + userId + " Does Not Exist");
-		String notification = r.getString(1) + " " + r.getString(2) + " has gifted you a pass! Check it out in your passes tab";
-
-		s.executeUpdate("begin; update users set passes_available = passes_available + " + passId + ", notifications = notification || '" +
-		notification + "'::varchar, new_notifications = new_notifications + 1 where puid_num = " + toUserId +
-		"; update users set passes_available = passes_available - " + passId + " where puid_num = " + userId +
-		"; update passes set owner = " + toUserId + ", previous_owners = previous_owners + " +
-		userId + " where id = " + passId + "; commit");
-
-	}
-
-	function addPlannedAttendance(int eventId)
-	{
-		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
-			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-		if (!s.executeQuery("select id from events where id = " + eventId).next())
-			throw new IllegalArgumentException("Event ID: " + eventId + " Does Not Exist");
-		s.executeUpdate("update users set PLANNED_ATTENDANCE = PLANNED_ATTENDANCE + " + eventId + " where puid_num = " + userId);
-	}
-
-	function removePlannedAttendance(int eventId)
-	{
-		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
-			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-
-		s.executeUpdate("update users set planned_attendance = planned_attendance - " + eventId + " where puid_num = " + userId);
-	}
-
-	function removePastAttendance(int eventId)
-	{
-		$r = s.executeQuery("select past_attendance # " + eventId + ", past_attendance_dates from users where puid_num = " + userId);
-		if (!r.next())
-			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-		int index = r.getInt(1);
-		index -= 1;
-		ArrayList<Long> pastAttendanceDates = new ArrayList<Long>(Arrays.asList((Long[]) r.getArray(2).getArray()));
-		pastAttendanceDates.remove(index);
-		PreparedStatement p = null;
-		try
-		{
-			p = con.prepareStatement("update users set past_attendance = past_attendance - " + eventId + ", past_attendance_dates = ? where puid_num = " + userId);
-			p.setArray(1, con.createArrayOf("bigint", pastAttendanceDates.toArray()));
-			p.executeUpdate();
-		}
-		finally
-		{
-			if (p != null)
-				p.close();
-		}
-	}
-
-	function addToVisibleTo(long userToAdd)
-	{
-		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
-			throw new IllegalArgumentException("PUID_NUM: " + userId + " To Add To Does Not Exist");
-		if (!s.executeQuery("select puid_num from users where puid_num = " + userToAdd).next())
-			throw new IllegalArgumentException("PUID_NUM: " + userToAdd + " To Be Added Does Not Exist");
-		s.executeUpdate("update users set visible_to = visible_to || " + userToAdd + "::bigint where puid_num = " + userId);
-	}
-
-	function removeFromVisibleTo(long userToRemove)
-	{
-		$r = s.executeQuery("select visible_to from users where puid_num = " + userId);
-		if (!r.next())
-			throw new IllegalArgumentException("PUID_NUM: " + userId + " Does Not Exist");
-		Long[] users = (Long[]) r.getArray(1).getArray();
-
-		PreparedStatement p = null;
-		try
-		{
-			p = con.prepareStatement("update users set visible_to = ? where puid_num = " + userId);
-			p.setArray(1, con.createArrayOf("bigint", removeIndexFromLongArray(users, userToRemove)));
-			p.executeUpdate();
-		}
-		finally
-		{
-			if (p != null)
-				p.close();
-		}
-	}
-
-	function addIgnoredUser(long userToIgnore)
-	{
-		if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
-			throw new IllegalArgumentException("PUID_NUM: " + userId + " To Add To Does Not Exist");
-		if (!s.executeQuery("select puid_num from users where puid_num = " + userToIgnore).next())
-			throw new IllegalArgumentException("PUID_NUM: " + userToIgnore + " To Be Added Does Not Exist");
-		s.executeUpdate("update users set ignored_users = ignored_users || " + userToIgnore + "::bigint where puid_num = " + userId);
-	}
+function addIgnoredUser(long userToIgnore)
+{
+	if (!s.executeQuery("select puid_num from users where puid_num = " + userId).next())
+		throw new IllegalArgumentException("PUID_NUM: " + userId + " To Add To Does Not Exist");
+	if (!s.executeQuery("select puid_num from users where puid_num = " + userToIgnore).next())
+		throw new IllegalArgumentException("PUID_NUM: " + userToIgnore + " To Be Added Does Not Exist");
+	s.executeUpdate("update users set ignored_users = ignored_users || " + userToIgnore + "::bigint where puid_num = " + userId);	
+}
 
 	function removeIgnoredUser(long userToRemove)
 	{

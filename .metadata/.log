@@ -4463,3 +4463,1181 @@ Binding(CTRL+SHIFT+\,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SESSION 2012-09-17 18:25:45.577 -----------------------------------------------
+eclipse.buildId=I20120608-1400
+java.version=1.7.0_07
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY org.eclipse.ui 4 4 2012-09-17 18:26:01.619
+!MESSAGE Unable to find Action Set: org.eclipse.mylyn.context.ui.actionSet
+
+!ENTRY org.eclipse.ui 4 4 2012-09-17 18:26:01.648
+!MESSAGE Unable to find Action Set: org.eclipse.mylyn.doc.actionSet
+
+!ENTRY org.eclipse.ui 4 4 2012-09-17 18:26:01.649
+!MESSAGE Unable to find Action Set: org.eclipse.mylyn.tasks.ui.navigation
+
+!ENTRY org.eclipse.ui 4 4 2012-09-17 18:26:01.650
+!MESSAGE Unable to find Action Set: org.eclipse.wb.core.ui.actionset
+
+!ENTRY org.eclipse.wst.common.project.facet.core 4 0 2012-09-17 18:28:04.822
+!MESSAGE Project facet jst.java has not been defined. It is used in plugin org.eclipse.php.core.
+
+!ENTRY org.eclipse.dltk.core 2 0 2012-09-17 18:28:06.619
+!MESSAGE Error decoding problem idenfier "1073741824"
+
+!ENTRY org.eclipse.jface 2 0 2012-09-17 18:32:12.375
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-17 18:32:12.375
+!MESSAGE A conflict occurred for CTRL+I:
+Binding(CTRL+I,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.indent,Correct Indentation,
+		Corrects the indentation of the selected lines,
+		Category(org.eclipse.jdt.ui.category.source,Source,Java Source Actions,true),
+		org.eclipse.ui.internal.MakeHandlersGo@40c5db6b,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+I,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.format.active.elements,Format Active Elements,
+		Format active elements,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@1e46d2ba,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-17 18:32:12.375
+!MESSAGE A conflict occurred for CTRL+SHIFT+F:
+Binding(CTRL+SHIFT+F,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.format,Format,
+		Format the selected text,
+		Category(org.eclipse.jdt.ui.category.source,Source,Java Source Actions,true),
+		org.eclipse.ui.internal.MakeHandlersGo@7dc86f05,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+F,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.format.document,Format,
+		Format selection,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@3bef620d,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-17 18:32:12.375
+!MESSAGE A conflict occurred for CTRL+SHIFT+ARROW_DOWN:
+Binding(CTRL+SHIFT+ARROW_DOWN,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.goto.next.member,Go to Next Member,
+		Move the caret to the next member of the compilation unit,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@71f0f1c6,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+ARROW_DOWN,
+	ParameterizedCommand(Command(org.eclipse.wst.xml.ui.nextSibling,Next Sibling,
+		Go to Next Sibling,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@440bda03,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-17 18:32:12.375
+!MESSAGE A conflict occurred for ALT+SHIFT+ARROW_LEFT:
+Binding(ALT+SHIFT+ARROW_LEFT,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.select.previous,Select Previous Element,
+		Expand selection to include previous sibling,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@191389b,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(ALT+SHIFT+ARROW_LEFT,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.structure.select.previous,Select Previous Element,
+		Expand selection to include previous sibling,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@80fa0df,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-17 18:32:12.375
+!MESSAGE A conflict occurred for ALT+SHIFT+ARROW_UP:
+Binding(ALT+SHIFT+ARROW_UP,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.select.enclosing,Select Enclosing Element,
+		Expand selection to include enclosing element,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@651b48ea,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(ALT+SHIFT+ARROW_UP,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.structure.select.enclosing,Select Enclosing Element,
+		Expand selection to include enclosing element,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@3a144e42,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-17 18:32:12.375
+!MESSAGE A conflict occurred for CTRL+SHIFT+P:
+Binding(CTRL+SHIFT+P,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.goto.matching.bracket,Go to Matching Bracket,
+		Moves the cursor to the matching bracket,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@62502e81,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+P,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.goto.matching.bracket,Matching Character,
+		Go to Matching Character,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@6bde33dd,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-17 18:32:12.375
+!MESSAGE A conflict occurred for CTRL+SHIFT+/:
+Binding(CTRL+SHIFT+/,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.add.block.comment,Add Block Comment,
+		Enclose the selection with a block comment,
+		Category(org.eclipse.jdt.ui.category.source,Source,Java Source Actions,true),
+		org.eclipse.ui.internal.MakeHandlersGo@7e1d4993,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+/,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.add.block.comment,Add Block Comment,
+		Add Block Comment,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@555896b3,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-17 18:32:12.375
+!MESSAGE A conflict occurred for CTRL+O:
+Binding(CTRL+O,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.show.outline,Quick Outline,
+		Show the quick outline for the editor input,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@34c99294,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+O,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.quick_outline,Quick Outline,
+		Show the quick outline for the editor input,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@1db64d9f,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-17 18:32:12.375
+!MESSAGE A conflict occurred for CTRL+SHIFT+ARROW_UP:
+Binding(CTRL+SHIFT+ARROW_UP,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.goto.previous.member,Go to Previous Member,
+		Move the caret to the previous member of the compilation unit,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@2ba210f6,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+ARROW_UP,
+	ParameterizedCommand(Command(org.eclipse.wst.xml.ui.previousSibling,Previous Sibling,
+		Go to Previous Sibling,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@234d22f8,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-17 18:32:12.376
+!MESSAGE A conflict occurred for ALT+SHIFT+ARROW_DOWN:
+Binding(ALT+SHIFT+ARROW_DOWN,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.select.last,Restore Last Selection,
+		Restore last selection,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@1d079cdb,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(ALT+SHIFT+ARROW_DOWN,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.structure.select.last,Restore Last Selection,
+		Restore last selection,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@631d60ee,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-17 18:32:12.376
+!MESSAGE A conflict occurred for CTRL+SHIFT+C:
+Binding(CTRL+SHIFT+C,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.toggle.comment,Toggle Comment,
+		Toggle comment the selected lines,
+		Category(org.eclipse.jdt.ui.category.source,Source,Java Source Actions,true),
+		org.eclipse.ui.internal.MakeHandlersGo@5ecafcc0,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+C,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.toggle.comment,Toggle Comment,
+		Toggle Comment,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@63b3ad95,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+Binding(CTRL+SHIFT+C,
+	ParameterizedCommand(Command(org.eclipse.ui.edit.text.folding.collapse_all,Collapse All,
+		Collapses all folded regions,
+		Category(org.eclipse.ui.category.textEditor,Text Editing,Text Editing Commands,true),
+		org.eclipse.ui.internal.MakeHandlersGo@6097d1de,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.textEditorScope,,,user)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-17 18:32:12.376
+!MESSAGE A conflict occurred for ALT+SHIFT+ARROW_RIGHT:
+Binding(ALT+SHIFT+ARROW_RIGHT,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.select.next,Select Next Element,
+		Expand selection to include next sibling,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@f53775d,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(ALT+SHIFT+ARROW_RIGHT,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.structure.select.next,Select Next Element,
+		Expand selection to include next sibling,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@2b5d88ed,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-17 18:32:12.376
+!MESSAGE A conflict occurred for CTRL+SHIFT+\:
+Binding(CTRL+SHIFT+\,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.remove.block.comment,Remove Block Comment,
+		Remove the block comment enclosing the selection,
+		Category(org.eclipse.jdt.ui.category.source,Source,Java Source Actions,true),
+		org.eclipse.ui.internal.MakeHandlersGo@30c18287,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+\,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.remove.block.comment,Remove Block Comment,
+		Remove Block Comment,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@75410d01,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SESSION 2012-09-19 12:42:50.093 -----------------------------------------------
+eclipse.buildId=I20120608-1400
+java.version=1.7.0_07
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY org.eclipse.wst.common.project.facet.core 4 0 2012-09-19 12:43:13.302
+!MESSAGE Project facet jst.java has not been defined. It is used in plugin org.eclipse.php.core.
+
+!ENTRY org.eclipse.dltk.core 2 0 2012-09-19 12:43:18.955
+!MESSAGE Error decoding problem idenfier "1073741824"
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 13:40:01.760
+!MESSAGE An internal error occurred during: "Selection Job titile".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurrenceAnnotations(PHPStructuredEditor.java:2929)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$8.selectionChanged(PHPStructuredEditor.java:3180)
+	at org.eclipse.php.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup.calculateASTandInform(SelectionListenerWithASTManager.java:195)
+	at org.eclipse.php.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup$3.run(SelectionListenerWithASTManager.java:157)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 13:40:06.112
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 13:40:07.189
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 13:40:08.171
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 13:40:08.639
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 13:40:09.373
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 13:40:09.950
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 13:40:19.653
+!MESSAGE An internal error occurred during: "Selection Job titile".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurrenceAnnotations(PHPStructuredEditor.java:2929)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$8.selectionChanged(PHPStructuredEditor.java:3180)
+	at org.eclipse.php.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup.calculateASTandInform(SelectionListenerWithASTManager.java:195)
+	at org.eclipse.php.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup$3.run(SelectionListenerWithASTManager.java:157)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 13:40:25.409
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 13:40:27.952
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 13:40:28.576
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 13:40:29.169
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 13:40:36.423
+!MESSAGE An internal error occurred during: "Selection Job titile".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurrenceAnnotations(PHPStructuredEditor.java:2929)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$8.selectionChanged(PHPStructuredEditor.java:3180)
+	at org.eclipse.php.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup.calculateASTandInform(SelectionListenerWithASTManager.java:195)
+	at org.eclipse.php.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup$3.run(SelectionListenerWithASTManager.java:157)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 13:40:38.254
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 13:40:39.977
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 13:40:40.651
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+!SESSION 2012-09-19 13:40:47.945 -----------------------------------------------
+eclipse.buildId=I20120608-1400
+java.version=1.7.0_07
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY org.eclipse.wst.common.project.facet.core 4 0 2012-09-19 13:40:59.851
+!MESSAGE Project facet jst.java has not been defined. It is used in plugin org.eclipse.php.core.
+
+!ENTRY org.eclipse.dltk.core 2 0 2012-09-19 13:41:02.846
+!MESSAGE Error decoding problem idenfier "1073741824"
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:06:35.608
+!MESSAGE An internal error occurred during: "Selection Job titile".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurrenceAnnotations(PHPStructuredEditor.java:2929)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$8.selectionChanged(PHPStructuredEditor.java:3180)
+	at org.eclipse.php.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup.calculateASTandInform(SelectionListenerWithASTManager.java:195)
+	at org.eclipse.php.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup$3.run(SelectionListenerWithASTManager.java:157)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:06:36.476
+!MESSAGE An internal error occurred during: "Selection Job titile".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurrenceAnnotations(PHPStructuredEditor.java:2929)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$8.selectionChanged(PHPStructuredEditor.java:3180)
+	at org.eclipse.php.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup.calculateASTandInform(SelectionListenerWithASTManager.java:195)
+	at org.eclipse.php.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup$3.run(SelectionListenerWithASTManager.java:157)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:44.366
+!MESSAGE An internal error occurred during: "Selection Job titile".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurrenceAnnotations(PHPStructuredEditor.java:2929)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$8.selectionChanged(PHPStructuredEditor.java:3180)
+	at org.eclipse.php.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup.calculateASTandInform(SelectionListenerWithASTManager.java:195)
+	at org.eclipse.php.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup$3.run(SelectionListenerWithASTManager.java:157)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:46.140
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:46.676
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:47.183
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:47.555
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:47.873
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:48.397
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:48.868
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:49.202
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:49.647
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:49.851
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:50.310
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:50.458
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:50.663
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:50.950
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:51.099
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:51.414
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:51.564
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:51.780
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:51.979
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:52.192
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:52.368
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:52.592
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:52.817
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:52.982
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2012-09-19 15:11:53.185
+!MESSAGE An internal error occurred during: "Updating occurence annotations".
+!STACK 0
+java.lang.NumberFormatException: For input string: "outerloop"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.getNestingLevel(BreakContinueTargetFinder.java:80)
+	at org.eclipse.php.internal.core.search.BreakContinueTargetFinder.initialize(BreakContinueTargetFinder.java:51)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.updateOccurencesAnnotationsRunJob(PHPStructuredEditor.java:3061)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor.access$14(PHPStructuredEditor.java:2991)
+	at org.eclipse.php.internal.ui.editor.PHPStructuredEditor$6.run(PHPStructuredEditor.java:2976)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+!SESSION 2012-09-20 22:24:31.936 -----------------------------------------------
+eclipse.buildId=I20120608-1400
+java.version=1.7.0_07
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY org.eclipse.wst.common.project.facet.core 4 0 2012-09-20 22:24:45.749
+!MESSAGE Project facet jst.java has not been defined. It is used in plugin org.eclipse.php.core.
+
+!ENTRY org.eclipse.dltk.core 2 0 2012-09-20 22:24:49.170
+!MESSAGE Error decoding problem idenfier "1073741824"
+
+!ENTRY org.eclipse.jface 2 0 2012-09-20 22:57:05.990
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-20 22:57:05.990
+!MESSAGE A conflict occurred for CTRL+I:
+Binding(CTRL+I,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.indent,Correct Indentation,
+		Corrects the indentation of the selected lines,
+		Category(org.eclipse.jdt.ui.category.source,Source,Java Source Actions,true),
+		org.eclipse.ui.internal.MakeHandlersGo@4aa3734f,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+I,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.format.active.elements,Format Active Elements,
+		Format active elements,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@37334ad2,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-20 22:57:05.990
+!MESSAGE A conflict occurred for CTRL+SHIFT+F:
+Binding(CTRL+SHIFT+F,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.format,Format,
+		Format the selected text,
+		Category(org.eclipse.jdt.ui.category.source,Source,Java Source Actions,true),
+		org.eclipse.ui.internal.MakeHandlersGo@30e76dd1,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+F,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.format.document,Format,
+		Format selection,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@7b3db112,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-20 22:57:05.990
+!MESSAGE A conflict occurred for CTRL+SHIFT+ARROW_DOWN:
+Binding(CTRL+SHIFT+ARROW_DOWN,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.goto.next.member,Go to Next Member,
+		Move the caret to the next member of the compilation unit,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@29dacd6c,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+ARROW_DOWN,
+	ParameterizedCommand(Command(org.eclipse.wst.xml.ui.nextSibling,Next Sibling,
+		Go to Next Sibling,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@2e1952c0,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-20 22:57:05.991
+!MESSAGE A conflict occurred for ALT+SHIFT+ARROW_LEFT:
+Binding(ALT+SHIFT+ARROW_LEFT,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.select.previous,Select Previous Element,
+		Expand selection to include previous sibling,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@5be482eb,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(ALT+SHIFT+ARROW_LEFT,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.structure.select.previous,Select Previous Element,
+		Expand selection to include previous sibling,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@5302e4ba,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-20 22:57:05.991
+!MESSAGE A conflict occurred for ALT+SHIFT+ARROW_UP:
+Binding(ALT+SHIFT+ARROW_UP,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.select.enclosing,Select Enclosing Element,
+		Expand selection to include enclosing element,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@774f416e,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(ALT+SHIFT+ARROW_UP,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.structure.select.enclosing,Select Enclosing Element,
+		Expand selection to include enclosing element,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@e0e9616,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-20 22:57:05.991
+!MESSAGE A conflict occurred for CTRL+SHIFT+P:
+Binding(CTRL+SHIFT+P,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.goto.matching.bracket,Go to Matching Bracket,
+		Moves the cursor to the matching bracket,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@7450d9f3,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+P,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.goto.matching.bracket,Matching Character,
+		Go to Matching Character,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@62dc339a,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-20 22:57:05.991
+!MESSAGE A conflict occurred for CTRL+SHIFT+/:
+Binding(CTRL+SHIFT+/,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.add.block.comment,Add Block Comment,
+		Enclose the selection with a block comment,
+		Category(org.eclipse.jdt.ui.category.source,Source,Java Source Actions,true),
+		org.eclipse.ui.internal.MakeHandlersGo@68151c2d,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+/,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.add.block.comment,Add Block Comment,
+		Add Block Comment,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@5eccadd4,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-20 22:57:05.991
+!MESSAGE A conflict occurred for CTRL+O:
+Binding(CTRL+O,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.show.outline,Quick Outline,
+		Show the quick outline for the editor input,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@41ed03bd,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+O,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.quick_outline,Quick Outline,
+		Show the quick outline for the editor input,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@2f908f1b,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-20 22:57:05.991
+!MESSAGE A conflict occurred for CTRL+SHIFT+ARROW_UP:
+Binding(CTRL+SHIFT+ARROW_UP,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.goto.previous.member,Go to Previous Member,
+		Move the caret to the previous member of the compilation unit,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@3ba34e02,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+ARROW_UP,
+	ParameterizedCommand(Command(org.eclipse.wst.xml.ui.previousSibling,Previous Sibling,
+		Go to Previous Sibling,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@46145b00,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-20 22:57:05.992
+!MESSAGE A conflict occurred for ALT+SHIFT+ARROW_DOWN:
+Binding(ALT+SHIFT+ARROW_DOWN,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.select.last,Restore Last Selection,
+		Restore last selection,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@5e5683e4,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(ALT+SHIFT+ARROW_DOWN,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.structure.select.last,Restore Last Selection,
+		Restore last selection,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@45a5f5e1,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-20 22:57:05.992
+!MESSAGE A conflict occurred for CTRL+SHIFT+C:
+Binding(CTRL+SHIFT+C,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.toggle.comment,Toggle Comment,
+		Toggle comment the selected lines,
+		Category(org.eclipse.jdt.ui.category.source,Source,Java Source Actions,true),
+		org.eclipse.ui.internal.MakeHandlersGo@1ed1e1f,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+C,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.toggle.comment,Toggle Comment,
+		Toggle Comment,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@a422fb9,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+Binding(CTRL+SHIFT+C,
+	ParameterizedCommand(Command(org.eclipse.ui.edit.text.folding.collapse_all,Collapse All,
+		Collapses all folded regions,
+		Category(org.eclipse.ui.category.textEditor,Text Editing,Text Editing Commands,true),
+		org.eclipse.ui.internal.MakeHandlersGo@76548635,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.textEditorScope,,,user)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-20 22:57:05.992
+!MESSAGE A conflict occurred for ALT+SHIFT+ARROW_RIGHT:
+Binding(ALT+SHIFT+ARROW_RIGHT,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.select.next,Select Next Element,
+		Expand selection to include next sibling,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@27373e44,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(ALT+SHIFT+ARROW_RIGHT,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.structure.select.next,Select Next Element,
+		Expand selection to include next sibling,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@5e199259,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-09-20 22:57:05.992
+!MESSAGE A conflict occurred for CTRL+SHIFT+\:
+Binding(CTRL+SHIFT+\,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.remove.block.comment,Remove Block Comment,
+		Remove the block comment enclosing the selection,
+		Category(org.eclipse.jdt.ui.category.source,Source,Java Source Actions,true),
+		org.eclipse.ui.internal.MakeHandlersGo@1bd8f679,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+\,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.remove.block.comment,Remove Block Comment,
+		Remove Block Comment,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@383012b8,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
