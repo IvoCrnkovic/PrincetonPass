@@ -1,12 +1,18 @@
 <?php
 //TODO use exception types
+//TODO check all long arrays, maybe change puid_num to ints
 class User
 {
 	private $LIST_SEPARATOR = -432625;
 	private $userId;
+	function _construct($id)
+	{
+		$userId = $id;
+	}
+	
 	function getFirstName()
 	{
-		$r = pg_query($dbconn, "select first_name from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select first_name from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		$result = pg_fetch_result($r, 1, 1); 
@@ -17,7 +23,7 @@ class User
 	}
 	function getLastName()
 	{
-		$r = pg_query($dbconn, "select last_name from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select last_name from users where id = " . $userId);
 		if(!$r === false)
 			throw new Exception("Query Error");
 		$result = pg_fetch_result($r, 1, 1); 
@@ -28,7 +34,7 @@ class User
 	}
 	function getGraduationYear()
 	{
-		$r = pg_query($dbconn, "select graduation_year from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select graduation_year from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		$result = pg_fetch_result($r, 1, 1); 
@@ -39,7 +45,7 @@ class User
 	}
 	function getClub()
 	{
-		$r = pg_query($dbconn, "select club_membership from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select club_membership from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		$result = pg_fetch_result($r, 1, 1); 
@@ -50,13 +56,14 @@ class User
 	}
 	function getList($listNum)
 	{
-		$r = pg_query($dbconn, "select lists from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select lists from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		$result = pg_fetch_result($r, 1, 1); 
 		if($result === false)
 			throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 		pg_free_result($r);
+		$allLists = getPgArray($result);
 		$currentList = -1;
 		$firstIndex = -1; 
 		$lastIndex = count($allLists);
@@ -79,51 +86,51 @@ class User
 	}
 	function getGroups()
 	{
-		$r = pg_query($dbconn, "select group_membership from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select group_membership from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		$result = pg_fetch_result($r, 1, 1); 
 		if($result === false)
 			throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 		pg_free_result($r);
-		return $result;
+		return getPgArray($result);
 	}
 	function getPassesAvailable()
 	{
-		$r = pg_query($dbconn, "select passes_available from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select passes_available from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		$result = pg_fetch_result($r, 1, 1); 
 		if($result === false)
 			throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 		pg_free_result($r);
-		return $result;
+		return getPgArray($result);
 	}
 	function getPlannedAttendance()
 	{
-		$r = pg_query($dbconn, "select planned_attendance from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select planned_attendance from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		$result = pg_fetch_result($r, 1, 1); 
 		if($result === false)
 			throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 		pg_free_result($r);
-		return $result;
+		return getPgArray($result);
 	}
 	function getPastAttendance()
 	{
-		$r = pg_query($dbconn, "select past_attendance from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select past_attendance from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		$result = pg_fetch_result($r, 1, 1); 
 		if($result === false)
 			throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 		pg_free_result($r);
-		return $result;
+		return getPgArray($result);
 	}
 	function getPrivacySetting()
 	{
-		$r = pg_query($dbconn, "select privacy_setting from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select privacy_setting from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		$result = pg_fetch_result($r, 1, 1); 
@@ -134,73 +141,73 @@ class User
 	}
 	function getVisibleTo()
 	{
-		$r = pg_query($dbconn, "select visible_to from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select visible_to from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		$result = pg_fetch_result($r, 1, 1); 
 		if($result === false)
 			throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 		pg_free_result($r);
-		return $result;
+		return getPgArray($result);
 	}
 	function getClaimablePasses()
 	{
-		$r = pg_query($dbconn, "select claimable_passes from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select claimable_passes from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		$result = pg_fetch_result($r, 1, 1); 
 		if($result === false)
 			throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 		pg_free_result($r);
-		return $result;
+		return getPgArray($result);
 	}
 	function getJoinableGroups()
 	{
-		$r = pg_query($dbconn, "select joinable_groups from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select joinable_groups from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		$result = pg_fetch_result($r, 1, 1); 
 		if($result === false)
 			throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 		pg_free_result($r);
-		return $result;
+		return getPgArray($result);
 	}
 	function getIgnoredUsers()
 	{
-		$r = pg_query($dbconn, "select ignored_users from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select ignored_users from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		$result = pg_fetch_result($r, 1, 1); 
 		if($result === false)
 			throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 		pg_free_result($r);
-		return $result;
+		return getPgArray($result);
 	}
 	function getPastAttendanceDates()
 	{
-		$r = pg_query($dbconn, "select past_attendance_dates from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select past_attendance_dates from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		$result = pg_fetch_result($r, 1, 1); 
 		if($result === false)
 			throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 		pg_free_result($r);
-		return $result;
+		return getPgArray($result);
 	}
 	function getNotifications()
 	{
-		$r = pg_query($dbconn, "select notifications from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select notifications from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		$result = pg_fetch_result($r, 1, 1); 
 		if($result === false)
 			throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 		pg_free_result($r);
-		return $result;
+		return getPgArray($result);
 	}
 	function getListName()
 	{
-		$r = pg_query($dbconn, "select list_names[" . ($listNum + 1) . "] from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select list_names[" . ($listNum + 1) . "] from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		$result = pg_fetch_result($r, 1, 1); 
@@ -211,35 +218,36 @@ class User
 	}
 	function getGiftedPasses()
 	{
-		$r = pg_query($dbconn, "select gifted_passes from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select gifted_passes from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		$result = pg_fetch_result($r, 1, 1); 
 		if($result === false)
 			throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 		pg_free_result($r);
-		return $result;
+		return getPgArray($result);
 	}
 	
 	function setFirstName($x)
 	{
-		$r = pg_query($dbconn, "begin; update users set first_name = '" . $x . "' where puid_num = " . $userId);
+		$r = pg_query($dbconn, "begin; update users set first_name = '" . $x . "' where id = " . $userId);
 		if($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
 		pg_free_result($r);
 	}
-	function setLastName(
-			$x)
+	function setLastName($x)
 	{
-		$r = pg_query($dbconn, "begin; update users set last_name = '" . $x . "' where puid_num = " . $userId);
+		$r = pg_query($dbconn, "begin; update users set last_name = '" . $x . "' where id = " . $userId);
 		if($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
@@ -248,10 +256,11 @@ class User
 	}
 	function setGraduationYear($x)
 	{
-		$r = pg_query($dbconn, "begin; update users set graduation_year = " . $x . " where puid_num = " . $userId);
+		$r = pg_query($dbconn, "begin; update users set graduation_year = " . $x . " where id = " . $userId);
 		if($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
@@ -260,10 +269,11 @@ class User
 	}
 	function setPrivacySetting($x)
 	{
-		$r = pg_query($dbconn, "begin; update users set privacy_setting = " . $x . " where puid_num = " . $userId);
+		$r = pg_query($dbconn, "begin; update users set privacy_setting = " . $x . " where id = " . $userId);
 		if($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
@@ -271,24 +281,24 @@ class User
 		pg_free_result($r);
 	}
 	
-	
 	function addToList($listNum, $idToAdd)
 	{
 		if ($listNum < 0)
 			throw new Exception("Invalid List Number");
-		$r = pg_query($dbconn, "select puid_num from users where puid_num = " . $idToAdd);
+		$r = pg_query($dbconn, "select id from users where id = " . $idToAdd);
 		if ($r === false)
 			throw new Exception("Query Error");
 		if (!pg_fetch_result($r, 1, 1))
 			throw new Exception("PUID_NUM: " . $idToAdd . " To Be Added Does Not Exist");
 		pg_free_result($r);
-		$r = pg_query($dbconn, "select lists from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select lists from users where id = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
-		$lists = pg_fetch_result($r, 1, 1);
+		$dbarr = pg_fetch_result($r, 1, 1);
 		pg_free_result($r);
-		if ($lists === false)
+		if ($dbarr === false)
 			throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
+		$lists = getPgArray($dbarr);
 		$currentList = -1;
 		$index = 0;
 		for (; $index < count($lists); $index++)
@@ -310,58 +320,79 @@ class User
 		}
 		array_splice($lists, $index, 0, $indexToAdd);
 		
-		$r = pg_query_params($dbconn, "begin; update users set lists = $1 where puid_num = " . $userId, array($lists));
+		$r = pg_query_params($dbconn, "begin; update users set lists = $1 where id = " . $userId, array(toPgArray($lists)));
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
-	
+	/*
 	function addList($listToAdd, $name)
 	{
 		$r = pg_query($dbconn, "select lists from users where puid_num = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Failed");
-		$lists = pg_fetch_result($r, 1, 1);
+		$dbarr = pg_fetch_result($r, 1, 1);
 		pg_free_result($r);
-		if ($lists === false)
-			throw new Exception("PUID_NUM: " + $userId + " Does Not Exist");
+		if ($dbarr === false)
+			throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
+		$lists = getPgArray($dbarr);
 		
 		array_push($lists, $LIST_SEPERATOR);
 		array_push($lists, $listToAdd);
 	
-		$r = pg_query_params($dbconn, "begin; update users set lists = $1 where puid_num = " . $userId, array($lists));
+		$r = pg_query_params($dbconn, "begin; update users set lists = lists || , list_names = list_names || ARRAY['" . $name . 
+				"']::varchar[] where puid_num = " . $userId, array(toPgArray($lists)));
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
+	}*/
+	function addList($name)
+	{
+		$r = pg_query($dbconn, "begin; update users set lists = lists + " . $LIST_SEPARATOR . ", list_names = list_names || ARRAY['" . $name . 
+				"']::varchar[] where id = " . $userId);
+		if($r === false)
+		{
+			pg_query($dbconn, "rollback");
+			pg_free_result($r);
+			throw new Exception("Update Failed");
+		}
+		else
+			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function removeFromList($listNum, $idToRemove)
 	{
 		if ($listNum < 0)
 			throw new Exception("Invalid List Number");
-		$r = pg_query($dbconn, "select puid_num from users where puid_num = " . $idToRemove);
+		$r = pg_query($dbconn, "select id from users where id = " . $idToRemove);
 		if ($r === false)
 			throw new Exception("Query Failed");
 		if (pg_fetch_result($r, 1, 1) === false)
 			throw new Exception("PUID_NUM: " . $idToRemove . " To Be Removed Does Not Exist");
 		pg_free_result($r);
-		$r = pg_query($dbconn, "select lists from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select lists from users where id = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Failed");
 	
-		$lists = pg_fetch_result($r, 1, 1);
+		$dbarr = pg_fetch_result($r, 1, 1);
 		pg_free_result($r);
-		if ($lists === false)
+		if ($dbarr === false)
 			throw new Exception("PUID_NUM: " . $userId . " To Be Removed Does Not Exist");
 	
+		$lists = getPgArray($dbarr);
 		$index = 0;
 		$size = count($lists);
 		//TODO Check this label
@@ -393,14 +424,16 @@ class User
 		if ($index == $size)
 			throw new Exception("PUID_NUM: " . $idToRemove . " Not Found In List");
 	
-		$r = pg_query_params($dbconn, "begin; update users set lists = $1 where puid_num = " . $userId, array($lists));
+		$r = pg_query_params($dbconn, "begin; update users set lists = $1 where id = " . $userId, array(toPgArray($lists)));
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function removeFromList($listNum, $listIndex)
@@ -409,14 +442,15 @@ class User
 			throw new Exception("Invalid List Number");
 		if ($listIndex < 0)
 			throw new Exception("Invalid List Index");
-		$r = pg_query($dbconn, "select lists from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select lists from users where id = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
-		$lists = pg_fetch_result($r, 1, 1);
+		$dbarr = pg_fetch_result($r, 1, 1);
 		pg_free_result($r);
-		if ($lists === false)
+		if ($dbarr === false)
 			throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
-	
+		$lists = getPgArray($dbarr);
+		
 		$index = 0;
 		$size = count($lists);
 		outerloop: for ($i =  0; $i < $listNum; $i++)
@@ -446,28 +480,32 @@ class User
 		if ($index == $size)
 			throw new Exception("List Index " . $listIndex . " Out Of Bounds");
 	
-		$r = pg_query_params($dbconn, "begin; update users set lists = $1 where puid_num = " . $userId, array($lists));
+		$r = pg_query_params($dbconn, "begin; update users set lists = $1 where id = " . $userId, array(toPgArray($lists)));
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function removeList($listNum)
 	{
 		if ($listNum <= 0)
 			throw new Exception("Invalid List Number");
-		$r = pg_query($dbconn, "select lists, list_names from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select lists, list_names from users where id = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
-		$listNames = pg_fetch_result($r, 1, 1);
-		$lists = pg_fetch_result($r, 1, 2);
+		$dbarr1 = pg_fetch_result($r, 1, 1);
+		$dbarr2 = pg_fetch_result($r, 1, 2);
 		pg_free_result($r);
-		if ($listNames === false || $lists === false)
+		if ($dbarr1 === false || $dbarr2 === false)
 			throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
+		$listNames = getPgArray($dbarr1);
+		$lists = getPgArray($dbarr2);
 		
 		$currentList = -1;
 		$index = 0;
@@ -491,75 +529,90 @@ class User
 		
 		array_splice($listNames, $index, 1);
 	
-		$r = pg_query_params($dbconn, "begin; update users set lists = $1 where puid_num = " . $userId, array($lists));
+		$r = pg_query_params($dbconn, "begin; update users set lists = $1, listNames = $2 where id = " . 
+				$userId, array(toPgArray($lists), toPgArray($listNames)));
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function addGroup($groupId)
 	{
-		$r = pg_query("select puid_num from users where puid_num = " . $userId);
+		$r = pg_query($dbonnn, "select id from users where id = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
-		if (!pg_fetch_result($r, 1, 1))
+		if (pg_fetch_result($r, 1, 1) === false)
 			throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
 		pg_free_result($r);
-		$r = pg_query($dbconn, "select pending_members from groups where id = " . $groupId);
+		$r = pg_query($dbconn, "select id from groups where id = " . $groupId);
 		if ($r === false)
 			throw new Exception("Query Error");
-		$pendingInvites = pg_fetch_result($r, 1, 1);
+		$id = pg_fetch_result($r, 1, 1);
 		pg_free_result($r);
-		if (!$pendingInvites)
+		if (!$id)
 			throw new Exception("Group ID: " . $groupId . " Does Not Exist");
 		
-		array_splice($pendingInvites, array_search($userId, $pendingInvites), 1);
-		$r = pg_query_params("begin; update users set group_membership = group_membership + " . $groupId . " where puid_num = " . $userId . "; " .
-			"update groups set members = members + " . $userId . ", pending_invites = $1 where id = " . $groupId, array($pendingInvites));
+		$r = pg_query("begin; update users set group_membership = group_membership + " . $groupId . " where id = " . $userId . "; " .
+			"update groups set members = members + " . $userId . ", pending_invites = pending_invites - " . $groupId . " where id = " . $groupId);
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function removeGroup($groupId)
 	{
-		$r = pg_query($dbconn, "select puid_num from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select id from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		$result = pg_fetch_result($r, 1, 1); 
 		pg_free_result($r);
 		if($result === false)
 			throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
-	
-		$r = pg_query($dbconn, "begin; update users set group_membership = group_membership - " . $groupId . "where puid_num = " . $userId . "; " .
-		"update groups set members = members - " . $userId . " where id = " . $groupId);
+		$r = pg_query($dbconn, "select id from groups where id = " . $groupId);
+		if($r === false)
+			throw new Exception("Query Error");
+		$id = pg_fetch_result($r, 1, 1);
+		pg_free_result($r);
+		if($id === false)
+			throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
+		
+		$r = pg_query($dbconn, "begin; update users set group_membership = group_membership - " . $groupId . " where id = " . $userId . "; " .
+		"update groups set members = members - " . $userId . " where id = " . $groupId, array(toPgArray($members)));
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function transferPass($toUserId, $passId)
 	{
-		$r = pg_query($dbconn, "select ignored_users @> array[" . $userId . "]::bigint[] from users where puid_num = " . $toUserId);
+		$r = pg_query($dbconn, "select ignored_users @> array[" . $userId . "]::bigint[] from users where id = " . $toUserId);
 		if ($r === false)
 			throw new Exception("Query Error");
-		if (pg_fetch_result($r, 1, 1) === false)
+		if (pg_fetch_result($r, 1, 1) === true)
 			throw new Exception("User " . $userId . " Is Ignored By User " . $toUserId);
 		pg_free_result($r);
 		
 		$r = pg_query($dbconn, "select TRANSFERABLE from passes where id = " . $passId);
+		if ($r === false)
+			throw new Exception("Query Error");
 		if (pg_fetch_result($r, 1, 1) === false)
 			throw new Exception("Pass ID: " . $passId . " Is Not Transferable");
 		pg_free_result($r);
@@ -572,175 +625,191 @@ class User
 		$notification = pg_fetch_result($r, 1, 1) . " " . pg_fetch_result($r, 1, 2) . " has gifted you a pass! Check it out in your passes tab";
 		pg_free_result($r);
 		
-		$r = pg_query("begin; update users set passes_available = passes_available + " . $passId . ", notifications = notification || '" .
-				$notification . "'::varchar, new_notifications = new_notifications + 1 where puid_num = " . $toUserId .
-				"; update users set passes_available = passes_available - " . $passId . " where puid_num = " . $userId .
+		$r = pg_query($dbconn, "begin; update users set passes_available = passes_available + " . $passId . ", notifications = notification || '" .
+				$notification . "'::varchar, new_notifications = new_notifications + 1 where id = " . $toUserId .
+				"; update users set passes_available = passes_available - " . $passId . " where id = " . $userId .
 				"; update passes set owner = " . $toUserId . ", previous_owners = previous_owners + " .
 				$userId . " where id = " . $passId);
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function addPlannedAttendance($eventId)
 	{
-		$r = pg_query($dbconn, "select puid_num from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select id from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
-		if(!pg_fetch_result($r, 1, 1))
+		if(pg_fetch_result($r, 1, 1) === false)
 			throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 		pg_free_result($r);
-		$r = pg_query($dbconn, "select id from events where puid_num = " . $eventId);
+		$r = pg_query($dbconn, "select id from events where id = " . $eventId);
 		if($r === false)
 			throw new Exception("Query Error");
 		if(pg_fetch_result($r, 1, 1) === false)
 			throw new Exception("Event ID " . $eventId . " Does Not Exist");
 		pg_free_result($r);
-		$r = pg_query($dbconn, "begin; update users set PLANNED_ATTENDANCE = PLANNED_ATTENDANCE + " . $eventId . " where puid_num = " . $userId);
+		$r = pg_query($dbconn, "begin; update users set PLANNED_ATTENDANCE = PLANNED_ATTENDANCE + " . $eventId . " where id = " . $userId);
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function removePlannedAttendance($eventId)
 	{
-		$r = pg_query($dbconn, "select puid_num from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select id from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		if(pg_fetch_result($r, 1, 1) === false)
 			throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 		pg_free_result($r);
 		
-		$r = pg_query($dbconn, "begin; update users set planned_attendance = planned_attendance - " . $eventId . " where puid_num = " . $userId);
+		$r = pg_query($dbconn, "begin; update users set planned_attendance = planned_attendance - " . $eventId . " where id = " . $userId);
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function removePastAttendance($eventId)
 	{
-		$r = pg_query($dbconn, "select past_attendance # " . $eventId . ", past_attendance_dates from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select past_attendance # " . $eventId . ", past_attendance_dates from users where id = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
 		$index = pg_fetch_result($r, 1, 1);
+		$pastAttendanceDates = pg_fetch_result($r, 1, 2);
 		pg_free_result($r);
 		if ($index === false)
 			throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
 		$index -= 1;
-		$pastAttendanceDates = pg_fetch_result($r, 1, 1);
-		pg_free_result($r);
+		
 		array_splice($pastAttendanceDates, $index, 1);
-		$r = pg_query_params($dbconn, "begin; update users set past_attendance = past_attendance - " . $eventId . ", past_attendance_dates = $1 where puid_num = " . $userId, array($pastAttendanceDates));
+		$r = pg_query_params($dbconn, "begin; update users set past_attendance = past_attendance - " . $eventId . 
+				", past_attendance_dates = $1 where id = " . $userId, array($pastAttendanceDates));
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function addToVisibleTo($userToAdd)
 	{
-		$r = pg_query($dbconn, "select puid_num from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select id from users where id = " . $userId);
 		if($r === false)
 			throw new Exception("Query Error");
 		if(pg_fetch_result($r, 1, 1) === false)
 			throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 		pg_free_result($r);
-		$r = pg_query($dbconn, "select puid_num from users where puid_num = " . $userToAdd);
+		$r = pg_query($dbconn, "select id from users where id = " . $userToAdd);
 		if($r === false)
 			throw new Exception("Query Error");
 		if(pg_fetch_result($r, 1, 1) === false)
 			throw new Exception("PUID_NUM " . $userToAdd . " Does Not Exist");
 		pg_free_result($r);
-		$r = pg_query("begin; update users set visible_to = visible_to || " . $userToAdd . "::bigint where puid_num = " . $userId);
+		//TODO add ifs
+		$r = pg_query("begin; update users set visible_to = visible_to + " . $userToAdd . " where puid_num = " . $userId);
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function removeFromVisibleTo($userToRemove)
 	{
-		$r = pg_query($dbconn, "select visible_to from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select id from users where id = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
-		$users = pg_fetch_result($r, 1, 1);
+		$id = pg_fetch_result($r, 1, 1);
 		pg_free_result($r);
-		if ($users === false)
+		if ($id === false)
 			throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
 	
-		array_splice($users, array_search($userToRemove, $users), 1);
-		$r = pg_query_params($dbconn, "begin; update users set visible_to = $1 where puid_num = " . $userId, array($users));
+		$r = pg_query($dbconn, "begin; update users set visible_to = visible_to - " . $userToRemove . " where id = " . $userId);
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function addIgnoredUser($userToIgnore)
 	{
-		$r = pg_query($dbconn, "select visible_to from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select id from users where id = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
 		if (pg_fetch_result($r, 1, 1) === false)
 			throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
 		pg_free_result($r);
-		$r = pg_query($dbconn, "select visible_to from users where puid_num = " . $userToIgnore);
+		$r = pg_query($dbconn, "select id from users where id = " . $userToIgnore);
 		if ($r === false)
 			throw new Exception("Query Error");
 		pg_free_result($r);
 		if (pg_fetch_result($r, 1, 1) === false)
 			throw new Exception("PUID_NUM: " . $userToIgnore . " Does Not Exist");
 		
-		$r = pg_query("begin; update users set ignored_users = ignored_users || " . $userToIgnore . "::bigint where puid_num = " . $userId);
+		$r = pg_query($dbconn, "begin; update users set ignored_users = ignored_users + " . $userToIgnore . " where puid_num = " . $userId);
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function removeIgnoredUser($userToRemove)
 	{
-		$r = s.executeQuery("select ignored_users from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select id from users where id = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
-		$users = pg_fetch_result($r, 1, 1);
+		$id = pg_fetch_result($r, 1, 1);
 		pg_free_result($r);
-		if ($users === false)
+		if ($id === false)
 			throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
 	
-		array_splice($users, array_search($userToRemove, $users), 1);
-		$r = pg_query_params("begin; update users set ignored_users = $1 where puid_num = " . $userId, array($users));
+		$r = pg_query("begin; update users set ignored_users = ignored_users - " . $userToRemove . " where id = " . $userId);
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function addNotification($message)
@@ -755,15 +824,17 @@ class User
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function removeNotification($index)
 	{
-		$r = pg_query("select notifications from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select notifications from users where puid_num = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
 		$notifications = pg_fetch_result($r, 1, 1);
@@ -777,10 +848,12 @@ class User
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function giftPassToGroup($groupId, $passId)
@@ -804,7 +877,7 @@ class User
 			throw new Exception("Pass ID: " . $passId . " Is Not Transferable");
 		pg_free_result($r);
 	
-		$r = pg_query("select members, group_name from groups where id = " . $groupId);
+		$r = pg_query($dbconn, "select members, group_name from groups where id = " . $groupId);
 		if ($r === false)
 			throw new Exception("Query Error");
 		$groupMembers = pg_fetch_result($r, 1, 1);
@@ -831,10 +904,12 @@ class User
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function giftPassToList($passId, $listNum)
@@ -880,7 +955,7 @@ class User
 		$sql = "begin; ";
 		for ($i = 0; $i < count($listMembers); $i++)
 		{
-			$value = $listMembers[i];
+			$value = $listMembers[$i];
 			if ($value == $userId || array_search($listMembers[$i], $availableTo) !== false)
 				continue;
 	
@@ -889,16 +964,18 @@ class User
 							$notification . "'::varchar, new_notifications = new_notifications + 1 where puid_num = " . $value . ";";
 		}
 				
-		$sql .= "update users set gifted_passes = gifted_passes + " . $passId . ", passes_available = passes_available - " . $passId . " where puid_num = " . userId .
+		$sql .= "update users set gifted_passes = gifted_passes + " . $passId . ", passes_available = passes_available - " . $passId . " where puid_num = " . $userId .
 					"; update passes set available_to = $1 where id = " . $passId . ";";
 		$r = pg_query_params($dbconn, $sql, array($availableTo));
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function giftPassToList($passId, $userIds)
@@ -939,10 +1016,12 @@ class User
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function retractPass($passId)
@@ -980,10 +1059,12 @@ class User
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function renameList($listNum, $name)
@@ -998,10 +1079,12 @@ class User
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function claimPass($passId)
@@ -1032,10 +1115,12 @@ class User
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 							
@@ -1091,10 +1176,12 @@ class User
 			if ($r === false)
 			{
 				pg_query($dbconn, "rollback");
+				pg_free_result($r);
 				throw new Exception("Update Failed");
 			}
 			else
 				pg_query($dbconn, "commit");
+			pg_free_result($r);
 			return true;
 		}
 		if ($passType == 0)
@@ -1103,10 +1190,12 @@ class User
 			if ($r === false)
 			{
 				pg_query($dbconn, "rollback");
+				pg_free_result($r);
 				throw new Exception("Update Failed");
 			}
 			else
 				pg_query($dbconn, "commit");
+			pg_free_result($r);
 			return true;
 		}
 		//Members Only
@@ -1129,10 +1218,12 @@ class User
 			if ($r === false)
 			{
 				pg_query($dbconn, "rollback");
+				pg_free_result($r);
 				throw new Exception("Update Failed");
 			}
 			else
 				pg_query($dbconn, "commit");
+			pg_free_result($r);
 			return true;
 		}
 		$r = pg_query($dbconn, "begin; update users set past_attendance = past_attendance + " . $eventId . ", past_attendance_dates = past_attendance_dates || " .
@@ -1141,10 +1232,12 @@ class User
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 		return true;
 	}
 	
@@ -1191,10 +1284,12 @@ class User
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function askListForPass($eventId, $listNum)
@@ -1253,10 +1348,12 @@ class User
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 	
 	function askListForPass($eventId, $userIds)
@@ -1293,10 +1390,12 @@ class User
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
+			pg_free_result($r);
 			throw new Exception("Update Failed");
 		}
 		else
 			pg_query($dbconn, "commit");
+		pg_free_result($r);
 	}
 }
 ?>
