@@ -729,7 +729,7 @@ class User
 			throw new Exception("PUID_NUM " . $userToAdd . " Does Not Exist");
 		pg_free_result($r);
 		//TODO add ifs
-		$r = pg_query("begin; update users set visible_to = visible_to + " . $userToAdd . " where puid_num = " . $userId);
+		$r = pg_query("begin; update users set visible_to = visible_to + " . $userToAdd . " where id = " . $userId);
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
@@ -778,7 +778,7 @@ class User
 		if (pg_fetch_result($r, 1, 1) === false)
 			throw new Exception("PUID_NUM: " . $userToIgnore . " Does Not Exist");
 		
-		$r = pg_query($dbconn, "begin; update users set ignored_users = ignored_users + " . $userToIgnore . " where puid_num = " . $userId);
+		$r = pg_query($dbconn, "begin; update users set ignored_users = ignored_users + " . $userToIgnore . " where id = " . $userId);
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
@@ -814,13 +814,13 @@ class User
 	
 	function addNotification($message)
 	{
-		$r = pg_query($dbconn, "select visible_to from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select id from users where id = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
 		if (pg_fetch_result($r, 1, 1) === false)
 			throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
 		pg_free_result($r);
-		$r = pg_query($dbconn, "begin; update users set notifications = notifications || '" . $message . "'::varchar where puid_num = " . $userId);
+		$r = pg_query($dbconn, "begin; update users set notifications = notifications || '" . $message . "'::varchar where id = " . $userId);
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
@@ -834,17 +834,18 @@ class User
 	
 	function removeNotification($index)
 	{
-		$r = pg_query($dbconn, "select notifications from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select notifications from users where id = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
-		$notifications = pg_fetch_result($r, 1, 1);
+		$dbarr = pg_fetch_result($r, 1, 1);
 		pg_free_result($r);
-		if ($notifications === false)
+		if ($dbarr === false)
 			throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
+		$notifications = getPgArray($dbarr);
 		if ($index >= count($notifications) || $index < 0)
 			throw new Exception("Index: " . $index . " Out Of Range");
 		array_splice($notifications, $index, 1);
-		$r = pg_query_params($dbconn, "begin; update users set notifications = $1 where puid_num = " . $userId, array($notifications));
+		$r = pg_query_params($dbconn, "begin; update users set notifications = $1 where puid_num = " . $userId, array(toPgArray($notifications)));
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
@@ -858,7 +859,7 @@ class User
 	
 	function giftPassToGroup($groupId, $passId)
 	{
-		$r = pg_query($dbconn, "select first_name, last_name from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select first_name, last_name from users where id = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
 		$firstName = pg_fetch_result($r, 1, 1);
@@ -870,22 +871,23 @@ class User
 		$r = pg_query($dbconn, "select transferable, available_to from passes where id = " . $passId);
 		if ($r === false)
 			throw new Exception("Query Error");
-		$availableTo = pg_fetch_result($r, 1, 2);
-		if ($availableTo === false)
+		$dbarr = pg_fetch_result($r, 1, 2);
+		if ($dbarr === false)
 			throw new Exception("Pass ID: " . $passId . " Does Not Exist");
 		if (pg_fetch_result($r, 1, 1) === false)
 			throw new Exception("Pass ID: " . $passId . " Is Not Transferable");
 		pg_free_result($r);
-	
+		$availableTo = getPgArray($dbarr);
+		
 		$r = pg_query($dbconn, "select members, group_name from groups where id = " . $groupId);
 		if ($r === false)
 			throw new Exception("Query Error");
-		$groupMembers = pg_fetch_result($r, 1, 1);
+		$dbarr = pg_fetch_result($r, 1, 1);
 		$notification = $firstName . " " . $lastName . " has gifted " . pg_fetch_result($r, 1, 2) . " a pass! Check your Get tab to claim it";
 		pg_free_result($r);
-		if ($groupMembers === false)
+		if ($dbarr === false)
 			throw new Exception("Group Id: " . $groupId . " Does Not Exist");
-		
+		$groupMembers = getPgArray($dbarr);
 		
 		$sql = "begin; ";
 		for ($i = 0; $i < count($groupMembers); $i++)
@@ -895,12 +897,12 @@ class User
 	
 			array_push($availableTo, $groupMembers[$i]);
 			$sql .= "update users set claimable_passes = claimable_passes + " . $passId . ", notifications = notifications || '"
-					. $notification . "'::varchar, new_notifications = new_notifications + 1 where puid_num = " . $value . ";";
+					. $notification . "'::varchar, new_notifications = new_notifications + 1 where id = " . $value . ";";
 		}
 		
-		$sql .= "update users set gifted_passes = gifted_passes + " . $passId . ", passes_available = passes_available - " . $passId . " where puid_num = " . $userId .
+		$sql .= "update users set gifted_passes = gifted_passes + " . $passId . ", passes_available = passes_available - " . $passId . " where id = " . $userId .
 					"; update passes set available_to = $1 where id = " . $passId . "; update groups set passes_available = passes_available + " . $passId . "where id = " . $groupId . ";";
-		$r = pg_query_params($dbconn, $sql, array($availableTo));
+		$r = pg_query_params($dbconn, $sql, array(toPgArray($availableTo)));
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
@@ -916,7 +918,7 @@ class User
 	{
 		if ($listNum < 0)
 			throw new Exception("List Number " . $listNum . " Out Of Range");
-		$r = pg_query($dbconn, "select lists, first_name, last_name from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select lists, first_name, last_name from users where id = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
 		$lists = pg_fetch_result($r, 1, 1);
@@ -924,15 +926,17 @@ class User
 			throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
 		$notification = pg_fetch_result($r, 1, 2) . " " . pg_fetch_result($r, 1, 3) . " has gifted you a pass! Check your Get tab to claim it";
 		pg_free_result($r);
+		
 		$r = pg_query($dbconn, "select transferable, available_to from passes where id = " . $passId);
 		if ($r === false)
 			throw new Exception("Query Failed");
-		$availableTo = pg_fetch_result($r, 1, 2);
-		if ($availableTo === false)
+		$dbarr = pg_fetch_result($r, 1, 2);
+		if ($dbarr === false)
 			throw new Exception("Pass ID: " . $passId . " Does Not Exist");
 		if (pg_fetch_result($r, 1, 1) === false)
 			throw new Exception("Pass ID: " . $passId . " Is Not Transferable");
 		pg_free_result($r);
+		$availableTo = getPgArray($dbarr);
 	
 		$listMembers = array();
 		$currentList = -1;
@@ -961,12 +965,12 @@ class User
 	
 			array_push($availableTo, $listMembers[$i]);
 			$sql .= "update users set claimable_passes = claimable_passes + " . $passId . ", notifications = notifications || '" .
-							$notification . "'::varchar, new_notifications = new_notifications + 1 where puid_num = " . $value . ";";
+							$notification . "'::varchar, new_notifications = new_notifications + 1 where id = " . $value . ";";
 		}
 				
-		$sql .= "update users set gifted_passes = gifted_passes + " . $passId . ", passes_available = passes_available - " . $passId . " where puid_num = " . $userId .
+		$sql .= "update users set gifted_passes = gifted_passes + " . $passId . ", passes_available = passes_available - " . $passId . " where id = " . $userId .
 					"; update passes set available_to = $1 where id = " . $passId . ";";
-		$r = pg_query_params($dbconn, $sql, array($availableTo));
+		$r = pg_query_params($dbconn, $sql, array(toPgArray($availableTo)));
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
@@ -980,7 +984,7 @@ class User
 	
 	function giftPassToList($passId, $userIds)
 	{
-		$r = pg_query($dbconn, "select first_name, last_name from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select first_name, last_name from users where id = " . $userId);
 		if (!$r)
 			throw new Exception("Query Failed");
 		$firstName = pg_fetch_result($r, 1, 1);
@@ -989,16 +993,18 @@ class User
 		if ($firstName === false || $lastName === false)
 			throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
 		$notification = $firstName . " " . $lastName . " has gifted you a pass! Check your Get tab to claim it";
+		
 		$r = pg_query($dbconn, "select transferable, available_to from passes where id = " . $passId);
 		if ($r === false)
 			throw new Exception("Query Failed");
-		$availableTo = pg_fetch_result($r, 1, 2);
-		if ($availableTo === false)
+		$dbarr = pg_fetch_result($r, 1, 2);
+		if ($dbarr === false)
 			throw new Exception("Pass ID: " . $passId . " Does Not Exist");
 		if (pg_fetch_result($r, 1, 1) === false)
 			throw new Exception("Pass ID: " . $passId . " Is Not Transferable");
 		pg_free_result($r);
-	
+		$availableTo = getPgArray($dbarr);
+		
 		$sql = "begin; ";
 		for ($i = 0; $i < count($userIds); $i++)
 		{
@@ -1007,12 +1013,12 @@ class User
 	
 			array_push($availableTo, $userIds[$i]);
 			$sql .= "update users set claimable_passes = claimable_passes + " . $passId . ", notifications = notifications || '" .
-					$notification . "'::varchar, new_notifications = new_notifications + 1 where puid_num = " . $userIds[$i] . ";";
+					$notification . "'::varchar, new_notifications = new_notifications + 1 where id = " . $userIds[$i] . ";";
 		}
 		
-		$sql .= "update users set gifted_passes = gifted_passes + " . $passId . ", passes_available = passes_available - " . $passId . " where puid_num = " . $userId .
+		$sql .= "update users set gifted_passes = gifted_passes + " . $passId . ", passes_available = passes_available - " . $passId . " where id = " . $userId .
 							"; update passes set available_to = $1 where id = " . $passId;
-		$r = pg_query_params($dbconn, $sql, array($availableTo));
+		$r = pg_query_params($dbconn, $sql, array(toPgArray($availableTo)));
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
@@ -1026,7 +1032,7 @@ class User
 	
 	function retractPass($passId)
 	{
-		$r = pg_query($dbconn, "select first_name, last_name from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select first_name, last_name from users where id = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
 		$firstName = pg_fetch_result($r, 1, 1);
@@ -1035,27 +1041,29 @@ class User
 		if ($firstName === false || $lastName === false)
 			throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
 		$notification = $firstName . " " . $lastName . " has retracted a previously gifted pass";
+		
 		$r = pg_query($dbconn, "select available_to, owner from passes where id = " . $passId);
 		if ($r === false)
 			throw new Exception("Query Error");
-		$availableTo = pg_fetch_result($r, 1, 1);
+		$dbarr = pg_fetch_result($r, 1, 1);
 		$owner = pg_fetch_result($r, 1, 2);
 		pg_free_result($r);
-		if ($availableTo === false)
+		if ($dbarr === false)
 			throw new Exception("Pass ID: " . $passId . " Does Not Exist");
 		if ($owner != $userId)
 			throw new Exception("User " . $userId . " No Longer Owns Pass");
-	
+		$availableTo = getPgArray($dbarr);
+		
 		$sql = "begin; ";
 		for ($i = 0; $i < count($availableTo); $i++)
 		{
 			$sql .= "update users set claimable_passes = claimable_passes - " . $passId . ", notifications = notifications || '" .
-			$notification . "'::varchar, new_notifications = new_notifications + 1 where puid_num = " . $userId . ";";
+			$notification . "'::varchar, new_notifications = new_notifications + 1 where id = " . $userId . ";";
 		}
 							
-		$sql .= "update users set gifted_passes = gifted_passes - " . $passId . ", passes_available = passes_available + " . $passId . " where puid_num = " . $userId .
+		$sql .= "update users set gifted_passes = gifted_passes - " . $passId . ", passes_available = passes_available + " . $passId . " where id = " . $userId .
 					"; update passes set available_to = $1 where id = " . $passId;
-		$r = pg_query_params($dbconn, $sql, array(array()));
+		$r = pg_query_params($dbconn, $sql, array(toPgArray(array())));
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
@@ -1069,13 +1077,13 @@ class User
 	
 	function renameList($listNum, $name)
 	{
-		$r = pg_query($dbconn, "select puid_num from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select id from users where id = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
 		if (pg_fetch_result($r, 1, 1) === false)
 			throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
 		pg_free_result($r);
-		$r = pg_query($dbconn, "begin; update users set list_names[" . ($listNum + 1) . "] = '" . $name . "' where puid_num = " . $userId);
+		$r = pg_query($dbconn, "begin; update users set list_names[" . ($listNum + 1) . "] = '" . $name . "' where id = " . $userId);
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
@@ -1089,7 +1097,7 @@ class User
 	
 	function claimPass($passId)
 	{
-		$r = pg_query($dbconn, "select puid_num from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select id from users where id = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
 		if (pg_fetch_result($r, 1, 1) === false)
@@ -1097,21 +1105,22 @@ class User
 		$r = pg_query($dbconn, "select available_to, owner from passes where id = " . $passId);
 		if ($r === false)
 			throw new Exception("Query Error");
-		$availableTo = pg_fetch_result($r, 1, 1);
+		$dbarr = pg_fetch_result($r, 1, 1);
 		$owner = pg_fetch_result($r, 1, 2);
 		pg_free_result($r);
-		if ($availableTo === false || $owner === false)
+		if ($dbarr === false || $owner === false)
 			throw new Exception("Pass ID: " . $passId . " Does Not Exist");
+		$availableTo = getPgArray($dbarr);
 	
 		$sql = "begin; ";
 		for ($i = 0; $i < count($availableTo); $i++)
 		{
-			$sql .= "update users set claimable_passes = claimable_passes - " . $passId . " where puid_num = " . $userId . ";";
+			$sql .= "update users set claimable_passes = claimable_passes - " . $passId . " where id = " . $userId . ";";
 		}
-		$sql .= "update users set gifted_passes = gifted_passes - " . $passId . " where puid_num = " . $owner .
+		$sql .= "update users set gifted_passes = gifted_passes - " . $passId . " where id = " . $owner .
 						"; update passes set available_to = $1, owner = " . $userId . ", PREVIOUS_OWNERS = previous_owners + " . $owner . " where id = " . $passId .
-						"; update users set passes_available = passes_available + " . $passId . " where puid_num = " . $userId;
-		$r = pg_query_params($dbconn, $sql, array(array()));
+						"; update users set passes_available = passes_available + " . $passId . " where id = " . $userId;
+		$r = pg_query_params($dbconn, $sql, array(toPgArray(array())));
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
@@ -1132,21 +1141,26 @@ class User
 		$r = pg_query($dbconn, "select id, banned_users @> array[" . $userId . "]::bigint[] from clubs where name = '" . $clubName . "::varchar");
 		if ($r === false)
 			throw new Exception("Query Error");
-		if (pg_fetch_result($r, 1, 1))
+		if (pg_fetch_result($r, 1, 1) === false)
 			throw new Exception("Club: " . $clubName . " Does Not Exist");
 		if (pg_fetch_result($r, 1, 2))
 		{
 			pg_free_result($r);
-			$r = pg_query($dbconn, "select banned_users, banned_until from clubs where name = '" . $clubName . "'::varchar");
-			$bannedUsers = pg_fetch_result($r, 1, 1);
-			$bannedUntil = pg_fetch_result($r, 1, 2);
+			$r = pg_query($dbconn, "select banned_until[banned_users # " . $userId . "] from clubs where name = '" . $clubName . "'::varchar");
+			$bannedUntilTime = pg_fetch_result($r, 1, 1);
 			pg_free_result($r);
-			$index = array_search($userId, $bannedUsers);
-			if ($time > $bannedUntil[$index])
+			if ($bannedUntilTime === false)
+				throw new Exception("Query Error");
+			
+			if ($time > $bannedUntilTime)
 			{
-				array_splice($bannedUsers, $index, 1);
-				array_splice($bannedUntil, $index, 1);
-				pg_query_params($dbconn, "update clubs set banned_users = $1, banned_until = $2 where name = '" . $clubName . "'::varchar", array($bannedUsers, $bannedUntil));
+				$r = pg_query($dbconn, "select banned_until, banned_users # " . $userId . " from clubs where name = '" . $clubName . "'::varchar");
+				$dbarr1 = pg_fetch_result($r, 1, 1);
+				$index = pg_fetch_result($r, 1, 2);
+				if ($dbarr === false || $index === false)
+					throw new Exception("Query Error");
+				pg_query_params($dbconn, "update clubs set banned_users = banned_users - " . $userId . ", banned_until = $1 where name = '" . $clubName . "'::varchar",
+							array(toPgArray(array_splice(getPgArray($dbarr), $index, 1))));
 			}
 			else
 				return false;
@@ -1163,7 +1177,7 @@ class User
 		pg_free_result($r);
 		if ($eventId === false || $passType === false)
 			throw new Exception("Event at " . $clubName . " at " . $time . " Does Not Exist");
-		$r = pg_query($dbconn, "select club_membership from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select club_membership from users where id = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
 		$clubMembership = pg_fetch_result($r, 1, 1);
@@ -1172,7 +1186,7 @@ class User
 			throw new Exception("PUID_NUM " . $userId . " Does Not Exist");
 		if ($clubMembership != NULL && strcmp($clubMembership, $clubName) == 0)
 		{
-			$r = pg_query($dbconn, "begin; update events set users_attended = users_attended || " . $userId . "::bigint where id = " . $eventId);
+			$r = pg_query($dbconn, "begin; update events set users_attended = users_attended + " . $userId . " where id = " . $eventId);
 			if ($r === false)
 			{
 				pg_query($dbconn, "rollback");
@@ -1186,7 +1200,7 @@ class User
 		}
 		if ($passType == 0)
 		{
-			$r = pg_query($dbconn, "begin; update events set users_attended = users_attended || " . $userId . "::bigint where id = " . $eventId);
+			$r = pg_query($dbconn, "begin; update events set users_attended = users_attended + " . $userId . " where id = " . $eventId);
 			if ($r === false)
 			{
 				pg_query($dbconn, "rollback");
@@ -1213,8 +1227,8 @@ class User
 		if ($type == 0)
 		{
 			$r = pg_query($dbconn, "begin; update users set past_attendance = past_attendance + " . $eventId . ", past_attendance_dates = past_attendance_dates || " .
-					$time . "::bigint where puid_num = " . $userId . "; update passes set events = intset(" . $eventId . "), transferable = false, status = 1 where id = " .
-					$passId . "; update events set users_attended = users_attended || " . $userId . "::bigint where id = " . $eventId);
+					$time . "::bigint where id = " . $userId . "; update passes set events = intset(" . $eventId . "), transferable = false, status = 1 where id = " .
+					$passId . "; update events set users_attended = users_attended + " . $userId . " where id = " . $eventId);
 			if ($r === false)
 			{
 				pg_query($dbconn, "rollback");
@@ -1227,8 +1241,8 @@ class User
 			return true;
 		}
 		$r = pg_query($dbconn, "begin; update users set past_attendance = past_attendance + " . $eventId . ", past_attendance_dates = past_attendance_dates || " .
-					$time + "::bigint, passes_available = passes_available - " . $passId + " where puid_num = " . $userId . "; delete from passes where id = " . $passId .
-					"; update events set users_attended = users_attended || " . $userId . "::bigint where id = " . $eventId);
+					$time + "::bigint, passes_available = passes_available - " . $passId + " where id = " . $userId . "; delete from passes where id = " . $passId .
+					"; update events set users_attended = users_attended + " . $userId . " where id = " . $eventId);
 		if ($r === false)
 		{
 			pg_query($dbconn, "rollback");
@@ -1256,11 +1270,12 @@ class User
 		if ($r === false)
 			throw new Exception("Query Error");
 		$groupName = pg_fetch_result($r, 1, 2);
-		$groupMembers = pg_fetch_result($r, 1, 1);
+		$dbarr = pg_fetch_result($r, 1, 1);
 		pg_free_result($r);
-		if ($groupName === false || $groupMembers === false)
+		if ($groupName === false || $dbarr === false)
 			throw new Exception("Group ID " . $eventId . " Does Not Exist");
-	
+		$groupMembers = getPgArray($dbarr);
+		
 		$r = pg_query($dbconn, "select first_name, last_name from users where puid_num = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
@@ -1277,8 +1292,8 @@ class User
 			if ($groupMembers[$i] == $userId)
 				continue;
 	
-			$sql .= "if (not select ignored_users @> array[" . $userId . "]::bigint[] from users where puid_num = " . $groupMembers[$i] . ") {update users set notifications = notifications || '"
-						. $notification . "'::varchar, new_notifications = new_notifications + 1 where puid_num = " . $groupMembers[$i] . "};";
+			$sql .= "if (not select ignored_users @> array[" . $userId . "]::bigint[] from users where id = " . $groupMembers[$i] . ") {update users set notifications = notifications || '"
+						. $notification . "'::varchar, new_notifications = new_notifications + 1 where id = " . $groupMembers[$i] . "};";
 		}
 		$r = pg_query($dbconn, $sql);
 		if ($r === false)
@@ -1303,17 +1318,17 @@ class User
 		if ($eventName === false || $clubName === false)
 				throw new Exception("Event ID " . $eventId . " Does Not Exist");
 	
-		$r = pg_query($dbconn, "select first_name, last_name, lists from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select first_name, last_name, lists from users where id = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
 		$firstName = pg_fetch_result($r, 1, 1);
 		$lastName = pg_fetch_result($r, 1, 2);
-		$lists = pg_fetch_result($r, 1, 3);
+		$dbarr = pg_fetch_result($r, 1, 3);
 		pg_free_result($r);
 		if ($firstName === false || $lastName === false)
 			throw new Exception("PUID_NUM: " . $userId . " Does Not Exist");
 		$notification = $firstName . " " . $lastName . " has requested a pass for " . $eventName . " at " . $clubName;
-		
+		$lists = getPgArray($dbarr);
 	
 		$listMembers = array();
 		$currentList = -1;
@@ -1341,7 +1356,7 @@ class User
 				continue;
 	
 			$sql .= "update users set notifications = notifications || '" .
-					$notification . "'::varchar, new_notifications = new_notifications + 1 where puid_num = " . $value . ";";
+					$notification . "'::varchar, new_notifications = new_notifications + 1 where id = " . $value . ";";
 		}
 			
 		$r = pg_query($dbconn, $sql);
@@ -1367,7 +1382,7 @@ class User
 		if ($eventName === false || $clubName === false)
 			throw new Exception("Event ID " . $eventId . " Does Not Exist");
 	
-		$r = pg_query($dbconn, "select first_name, last_name, lists from users where puid_num = " . $userId);
+		$r = pg_query($dbconn, "select first_name, last_name, lists from users where id = " . $userId);
 		if ($r === false)
 			throw new Exception("Query Error");
 		$firstName = pg_fetch_result($r, 1, 1);
@@ -1383,8 +1398,8 @@ class User
 			if ($userIds[$i] == $userId)
 				continue;
 			
-			$sql .= "if (not select ignored_users @> array[" . $userId . "]::bigint[] from users where puid_num = " . $userIds[$i] . ") {update users set notifications = notifications || '"
-				. $notification . "'::varchar, new_notifications = new_notifications + 1 where puid_num = " . $userIds[$i] . "};";
+			$sql .= "if (not select ignored_users @> array[" . $userId . "]::bigint[] from users where id = " . $userIds[$i] . ") {update users set notifications = notifications || '"
+				. $notification . "'::varchar, new_notifications = new_notifications + 1 where id = " . $userIds[$i] . "};";
 		}
 		$r = pg_query($dbconn, $sql);
 		if ($r === false)

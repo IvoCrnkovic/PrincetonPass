@@ -2,20 +2,19 @@
 	
 	function createEvent($clubName, $startDate, $endDate, $name, $description,	$passType, $passTransfer)
 	{
-		pg_query_params(
-			$dbconn,
-			"insert into events values(DEFAULT, '" . $clubName . "', $1, $2, $3, $4, $5, $6, $7)",
-			array($startDate, $endDate, $name, $description, $passType, $passTransfer, array of bigints)
-		);
+		pg_query_params($dbconn, "insert into events values(DEFAULT, '" . $clubName . "', $1, $2, $3, $4, $5, $6, $7)",
+			array($startDate, $endDate, $name, $description, $passType, $passTransfer, toPgArray(array())));
 	}
 	
 	function createPasses($clubName, $eventIds, $numberPerMember, $userIds, $transferable, $type)
 	{
-		$pcArray = array(null,intarray($eventIds),bigintarray, $transferable, $type, bigintarray);
+		$pcArray = array(null,intarray($eventIds),toPgArray(array()), $transferable, $type, toPgArray(array()));
 		
-		$result = pg_query($dbconn, "select members from clubs where name = '" + $clubName + "'");
-		$row = pg_fetch_array($result, 0);
-		$members = $row['members'];
+		$result = pg_query($dbconn, "select members from clubs where name = '" . $clubName . "'");
+		if ($result === false)
+			throw new Exception("Query Error");
+		$dbarr = pg_fetch_result($r, 1, 1);
+		$members = getPgArray($dbarr);
 		
 		for ($i = 0; $i < count($members); $i++)
 		{
