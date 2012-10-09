@@ -130,7 +130,7 @@
 		else
 			pg_query($dbconn, "commit");
 	}
-	
+	//TODO ensure event is owned  by club
 	function editEvent($eventId, $startDate, $endDate, $name, $description, $passType, $passTransfer)
 	{
 		$r = pg_query($dbconn, "begin; update events set start_date = " . $startDate . ", end_date = " . $endDate . ", name = '" .
